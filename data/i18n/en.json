@@ -208,5 +208,7 @@
   "summary.newRecord": "New record!",
   "summary.newRun": "New run",
   "summary.menu": "Main menu",
-  "summary.bestNone": "–"
+  "summary.bestNone": "–",
+  "save.full": "Saving failed: the device storage is full. You can keep playing, but progress is not saved.",
+  "save.corrupt": "The unfinished run could not be read and was discarded. Your records are safe."
 }

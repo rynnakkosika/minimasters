@@ -209,5 +209,7 @@
   "summary.newRecord": "Uusi ennätys!",
   "summary.newRun": "Uusi run",
   "summary.menu": "Päävalikkoon",
-  "summary.bestNone": "–"
+  "summary.bestNone": "–",
+  "save.full": "Tallennus epäonnistui: laitteen tallennustila on täynnä. Peli jatkuu, mutta edistyminen ei tallennu.",
+  "save.corrupt": "Keskeneräistä runia ei voitu lukea, joten se hylättiin. Ennätyksesi ovat tallessa."
 }

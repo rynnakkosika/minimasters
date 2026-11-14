@@ -1,7 +1,9 @@
-// Entry point: loads data, picks the language and routes between screens.
+// Entry point: loads data and saves, picks the language and routes between screens.
 import { loadCards } from './data/cards.js';
-import { setLocale } from './data/i18n.js';
+import { setLocale, t } from './data/i18n.js';
 import { newRun, openBooster } from './run/index.js';
+import { createStore } from './storage/save.js';
+import { h } from './ui/dom.js';
 import { closeOverlay } from './ui/components/tooltip.js';
 import { renderMenu } from './ui/screens/menu.js';
 import { renderBooster } from './ui/screens/booster.js';
@@ -10,27 +12,6 @@ import { renderMatch } from './ui/screens/match.js';
 import { renderOpponentIntro } from './ui/screens/opponent-intro.js';
 import { renderResult } from './ui/screens/result.js';
 import { renderRunSummary } from './ui/screens/run-summary.js';
-
-const SETTINGS_KEY = 'mm.settings.v1';
-// Records live here until the versioned profile save (US4/US5) takes them over.
-const RECORDS_KEY = 'mm.records.v1';
-const EMPTY_RECORDS = { bestRunWins: 0, runsCompleted: 0, runsWon: 0, matchesPlayed: 0 };
-
-function loadRecords() {
-  try {
-    return { ...EMPTY_RECORDS, ...JSON.parse(localStorage.getItem(RECORDS_KEY) || '{}') };
-  } catch {
-    return { ...EMPTY_RECORDS };
-  }
-}
-
-function loadSettings() {
-  try {
-    return { animSpeed: 1, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}') };
-  } catch {
-    return { animSpeed: 1 };
-  }
-}
 
 function randomSeed() {
   const a = new Uint32Array(1);
@@ -48,40 +29,61 @@ const SCREENS = {
   summary: renderRunSummary,
 };
 const root = document.getElementById('app');
+const store = createStore();
+const profile = store.loadProfile();
+store.saveProfile(profile); // completes the one-time move from the old settings/records keys
+
+/** Short non-blocking notice at the bottom of the screen. */
+function toast(text) {
+  const el = h('div', { class: 'toast', role: 'status' }, text);
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+let warnedFull = false;
+function reportSaveProblem() {
+  if (store.problem === 'full' && !warnedFull) {
+    warnedFull = true;
+    toast(t('save.full'));
+  }
+}
 
 const app = {
   run: null,
   screen: 'menu',
-  settings: loadSettings(),
-  records: loadRecords(),
+  profile,
+  settings: profile.settings,
+  records: profile.records,
   lastRunWasRecord: false,
 
   saveSettings() {
-    try {
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(app.settings));
-    } catch {
-      /* storage unavailable: settings last for this session only */
-    }
+    store.saveProfile(profile);
+    reportSaveProblem();
   },
 
+  /** Every change to the run goes through here, so the save is always current (FR-022). */
   setRun(run) {
     app.run = run;
+    if (run && !run.status.startsWith('COMPLETED')) store.saveRun(run);
+    reportSaveProblem();
   },
 
-  /** Called once when a run ends: updates the records and shows the summary. */
+  hasRunInProgress() {
+    return !!app.run && !app.run.status.startsWith('COMPLETED');
+  },
+
+  /** Called once when a run ends: updates the records, removes the run save, shows the summary. */
   finishRun() {
-    const r = app.records;
+    const r = profile.records;
     const run = app.run;
     app.lastRunWasRecord = run.wins > r.bestRunWins;
     r.bestRunWins = Math.max(r.bestRunWins, run.wins);
     r.runsCompleted++;
     if (run.status === 'COMPLETED_VICTORY') r.runsWon++;
     r.matchesPlayed += run.stats?.matches || 0;
-    try {
-      localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
-    } catch {
-      /* storage unavailable */
-    }
+    store.clearRun();
+    store.saveProfile(profile);
+    reportSaveProblem();
     app.go('summary');
   },
 
@@ -94,21 +96,21 @@ const app = {
   },
 
   startNewRun() {
-    app.run = newRun(randomSeed());
+    store.clearRun();
+    app.setRun(newRun(randomSeed()));
     app.openNextBooster();
   },
 
   openNextBooster() {
-    app.run = openBooster(app.run).run;
+    app.setRun(openBooster(app.run).run);
     app.go('booster');
   },
 
   resume() {
     const st = app.run?.status;
-    if (st === 'OPENING_BOOSTER') app.openNextBooster();
+    if (st === 'OPENING_BOOSTER') app.go('result');
     else if (st === 'DECKBUILDING') app.go('deck');
     else if (st === 'IN_MATCH') app.go('match');
-    else if (st?.startsWith('COMPLETED')) app.go('summary');
     else app.go('menu');
   },
 };
@@ -123,10 +125,17 @@ window.addEventListener('popstate', () => {
   }
 });
 
-document.documentElement.lang = setLocale(navigator.language);
+// Save once more when the app goes to the background (Android pause, tab switch, closing).
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && app.hasRunInProgress()) store.saveRun(app.run);
+});
+
+document.documentElement.lang = setLocale(profile.settings.locale || navigator.language);
 loadCards();
+app.run = store.loadRun();
 history.replaceState({ screen: 'menu' }, '');
 app.go('menu');
+if (store.problem === 'corrupt') toast(t('save.corrupt'));
 
 // Exposed for debugging in the browser console only.
 window.__app = app;

@@ -318,3 +318,10 @@ h1.loss { color: var(--danger); font-size: 30px; }
 .record-badge { margin: 0; padding: 4px 12px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); font-weight: 800; }
 .best-card { width: 140px; }
 .summary h3 { margin-bottom: 0; }
+
+/* ---- toast ---- */
+.toast {
+  position: fixed; z-index: 70; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+  width: min(420px, calc(100vw - 32px)); padding: 10px 14px; border-radius: var(--radius);
+  background: #14121bf0; border: 1px solid var(--line); box-shadow: 0 8px 24px #000a; font-size: 14px;
+}

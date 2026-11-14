@@ -151,10 +151,10 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 **Independent Test**: Sulje sovellus kesken ottelun, avaa uudelleen → "Jatka run" palauttaa saman tilan (quickstart-skenaario 7, SC-007).
 
-- [ ] T051 [P] [US4] Kirjoita `tests/save.test.js`: tallenna ja lataa tuottaa identtisen Runin ja MatchStaten (RNG mukaan lukien), korruptoitunut JSON ei kaada vaan palauttaa `null` ja säilyttää profiilin, migraatioketju `migrate[v] → v+1` toimii, täynnä oleva tila antaa varoituksen ilman kaatumista ja ladatusta tilasta jatkettu ottelu etenee samoin kuin keskeytymätön
-- [ ] T052 [US4] Toteuta `src/storage/save.js` [contracts/save-format.md](./contracts/save-format.md):n mukaan: avaimet `mm.profile.v1` ja `mm.run.v1`, `version`-kenttä, migraatiot, `saveRun`, `loadRun`, `clearRun`, `saveProfile` ja `loadProfile`. Ei henkilötietoja.
-- [ ] T053 [US4] Kutsu `saveRun` jokaisen `applyAction`-kutsun, boosterin avauksen ja pakkamuutoksen jälkeen (`src/ui/screens/match.js`, `booster.js`, `deckbuild.js`) sekä Capacitorin `pause`-tapahtumassa ja `visibilitychange`-tapahtumassa (FR-022)
-- [ ] T054 [US4] Päävalikko: "Jatka run" näkyy vain, jos tallennettu run on olemassa, ja palauttaa oikeaan näkymään. "Uusi run" kysyy vahvistuksen ennen keskeneräisen runin hylkäämistä (US4 skenaario 2). Muutokset tiedostoon `src/ui/screens/menu.js`.
+- [X] T051 [P] [US4] Kirjoita `tests/save.test.js`: tallenna ja lataa tuottaa identtisen Runin ja MatchStaten (RNG mukaan lukien), korruptoitunut JSON ei kaada vaan palauttaa `null` ja säilyttää profiilin, migraatioketju `migrate[v] → v+1` toimii, täynnä oleva tila antaa varoituksen ilman kaatumista ja ladatusta tilasta jatkettu ottelu etenee samoin kuin keskeytymätön
+- [X] T052 [US4] Toteuta `src/storage/save.js` [contracts/save-format.md](./contracts/save-format.md):n mukaan: avaimet `mm.profile.v1` ja `mm.run.v1`, `version`-kenttä, migraatiot, `saveRun`, `loadRun`, `clearRun`, `saveProfile` ja `loadProfile`. Ei henkilötietoja.
+- [X] T053 [US4] Kutsu `saveRun` jokaisen `applyAction`-kutsun, boosterin avauksen ja pakkamuutoksen jälkeen (`src/ui/screens/match.js`, `booster.js`, `deckbuild.js`) sekä Capacitorin `pause`-tapahtumassa ja `visibilitychange`-tapahtumassa (FR-022)
+- [X] T054 [US4] Päävalikko: "Jatka run" näkyy vain, jos tallennettu run on olemassa, ja palauttaa oikeaan näkymään. "Uusi run" kysyy vahvistuksen ennen keskeneräisen runin hylkäämistä (US4 skenaario 2). Muutokset tiedostoon `src/ui/screens/menu.js`.
 
 **Checkpoint**: Keskeytys ja jatkaminen toimivat jokaisessa näkymässä → commit
 
