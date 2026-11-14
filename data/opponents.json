@@ -17,11 +17,7 @@
         "ahjo",
         "kallio"
       ],
-      "common": 8,
-      "uncommon": 0,
-      "rare": 0,
-      "mythic": 0,
-      "basics": 12
+      "boosters": 1
     }
   },
   {
@@ -34,7 +30,7 @@
     "aiParams": {
       "searchDepth": 1,
       "searchWidth": 10,
-      "blunderRate": 0.25,
+      "blunderRate": 0.35,
       "rollout": false
     },
     "deckRecipe": {
@@ -42,11 +38,7 @@
         "usva",
         "ahjo"
       ],
-      "common": 7,
-      "uncommon": 3,
-      "rare": 0,
-      "mythic": 0,
-      "basics": 10
+      "boosters": 1
     }
   },
   {
@@ -59,7 +51,7 @@
     "aiParams": {
       "searchDepth": 1,
       "searchWidth": 10,
-      "blunderRate": 0.22,
+      "blunderRate": 0.32,
       "rollout": true
     },
     "deckRecipe": {
@@ -67,11 +59,7 @@
         "kallio",
         "usva"
       ],
-      "common": 6,
-      "uncommon": 4,
-      "rare": 1,
-      "mythic": 0,
-      "basics": 10
+      "boosters": 1
     }
   },
   {
@@ -82,20 +70,16 @@
     "tier": 4,
     "style": "aggro",
     "aiParams": {
-      "searchDepth": 2,
-      "searchWidth": 6,
-      "blunderRate": 0.2,
+      "searchDepth": 1,
+      "searchWidth": 10,
+      "blunderRate": 0.3,
       "rollout": true
     },
     "deckRecipe": {
       "elements": [
         "ahjo"
       ],
-      "common": 6,
-      "uncommon": 4,
-      "rare": 1,
-      "mythic": 0,
-      "basics": 10
+      "boosters": 2
     }
   },
   {
@@ -106,9 +90,9 @@
     "tier": 5,
     "style": "swarm",
     "aiParams": {
-      "searchDepth": 2,
+      "searchDepth": 1,
       "searchWidth": 10,
-      "blunderRate": 0.14,
+      "blunderRate": 0.3,
       "rollout": true
     },
     "deckRecipe": {
@@ -116,11 +100,7 @@
         "kallio",
         "ahjo"
       ],
-      "common": 6,
-      "uncommon": 4,
-      "rare": 2,
-      "mythic": 0,
-      "basics": 11
+      "boosters": 2
     }
   },
   {
@@ -132,8 +112,8 @@
     "style": "tempo",
     "aiParams": {
       "searchDepth": 2,
-      "searchWidth": 12,
-      "blunderRate": 0.1,
+      "searchWidth": 10,
+      "blunderRate": 0.28,
       "rollout": true
     },
     "deckRecipe": {
@@ -141,11 +121,7 @@
         "usva",
         "kallio"
       ],
-      "common": 6,
-      "uncommon": 5,
-      "rare": 1,
-      "mythic": 1,
-      "basics": 11
+      "boosters": 3
     }
   },
   {
@@ -157,8 +133,8 @@
     "style": "midrange",
     "aiParams": {
       "searchDepth": 2,
-      "searchWidth": 16,
-      "blunderRate": 0.08,
+      "searchWidth": 12,
+      "blunderRate": 0.25,
       "rollout": true
     },
     "deckRecipe": {
@@ -166,11 +142,7 @@
         "ahjo",
         "usva"
       ],
-      "common": 6,
-      "uncommon": 5,
-      "rare": 2,
-      "mythic": 1,
-      "basics": 12
+      "boosters": 4
     }
   }
 ]

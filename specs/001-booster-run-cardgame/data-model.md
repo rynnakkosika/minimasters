@@ -38,7 +38,7 @@ Validointi: generoitu sääntöteksti on enintään 3 riviä (noin 90 merkkiä) 
 | `id`, `seed` | string, uint32 | |
 | `status` | RunStatus | ks. tilakone |
 | `pool` | CardId[] | Kaikki runissa avatut kortit (ei perusresursseja) |
-| `deck` | `{ cards: CardId[], basics: { ahjo, kallio, usva } }` | 20–30 korttia yhteensä (FR-007) |
+| `deck` | `{ cards: CardId[], basics: { ahjo, kallio, usva } }` | Aina koko pooli + automaattiset lähteet, vähintään 20 korttia (FR-007) |
 | `wins` | int 0–7 | |
 | `opponentIndex` | int 0–6 | |
 | `boosters` | Booster[] | Avausjärjestyksessä |
@@ -48,7 +48,7 @@ Validointi: generoitu sääntöteksti on enintään 3 riviä (noin 90 merkkiä) 
 **Run-tilakone**:
 
 ```text
-OPENING_BOOSTER → DECKBUILDING → IN_MATCH ─┬─ voitto, wins < 7 → OPENING_BOOSTER
+OPENING_BOOSTER → READY → IN_MATCH ─┬─ voitto, wins < 7 → OPENING_BOOSTER
                                            ├─ voitto, wins = 7 → COMPLETED_VICTORY
                                            └─ häviö/luovutus  → COMPLETED_DEFEAT
 ```

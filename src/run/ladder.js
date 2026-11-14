@@ -1,8 +1,11 @@
-// Opponent order and deck generation from recipes (FR-006).
+// Opponent order and decks (FR-006). Opponents play by the same Minimasters rule as you: the
+// n-th opponent opens n boosters, keeps the cards of its own elements and plays them all.
+// Difficulty comes from how well the AI plays, not from better cards.
 import opponents from '../../data/opponents.json' with { type: 'json' };
 import { createRng } from '../engine/rng.js';
-import { allCards } from '../engine/db.js';
-import { BASIC_ID } from './deckbuilder.js';
+import { allCards, card } from '../engine/db.js';
+import { openBoosterCards } from './booster.js';
+import { deckFromPool, deckList } from './deckbuilder.js';
 
 export const OPPONENTS = opponents.slice().sort((a, b) => a.tier - b.tier);
 
@@ -11,16 +14,17 @@ export function opponentAt(index) {
   return OPPONENTS[Math.min(index, OPPONENTS.length - 1)];
 }
 
-/** Builds the opponent's deck (card id list) from its recipe with the given seed. */
-export function opponentDeck(opp, seed) {
+/** The opponent's opened cards: `boosters` boosters, only its own elements. */
+export function opponentPool(opp, seed) {
   const rng = createRng(seed);
-  const r = opp.deckRecipe;
   const cards = allCards();
-  const out = [];
-  for (const rarity of ['common', 'uncommon', 'rare', 'mythic']) {
-    const pool = cards.filter((c) => c.rarity === rarity && r.elements.includes(c.element)).map((c) => c.id);
-    for (let i = 0; i < (r[rarity] || 0) && pool.length; i++) out.push(rng.pick(pool));
-  }
-  for (let i = 0; i < r.basics; i++) out.push(BASIC_ID[r.elements[i % r.elements.length]]);
-  return out;
+  const { elements, boosters } = opp.deckRecipe;
+  const pool = [];
+  for (let i = 0; i < boosters; i++) pool.push(...openBoosterCards(rng.seed(), cards));
+  return pool.filter((id) => elements.includes(card(id).element));
+}
+
+/** The opponent's deck (card id list): its pool plus sources, like yours. */
+export function opponentDeck(opp, seed) {
+  return deckList(deckFromPool(opponentPool(opp, seed)));
 }

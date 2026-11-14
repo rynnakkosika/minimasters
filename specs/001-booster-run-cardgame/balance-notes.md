@@ -58,3 +58,20 @@ Havaintoja:
 - **Pakan sisältö vaikuttaa enemmän kuin tekoälyn parametrit.** Haun syvyyden ja virheprosentin säätö muutti tuloksia vain muutaman prosenttiyksikön, harvinaisten korttien määrä selvästi enemmän.
 - **Vastustaja 2 on edelleen helpompi kuin 1 ja 3.** Ensimmäinen vastustaja on silti tarkoituksella pehmeä, ja pelaajan ensimmäinen pakka on yhden boosterin pakka.
 - **Seuraava tarkistus pitää tehdä oikeilla pelaajilla:** ottelun kesto (SC-002) ja aloittelijan läpäisy (SC-003, SC-006).
+
+## 2026-11-14 — ei pakanrakennusta (Minimasters-sääntö)
+
+Käyttäjän pyynnöstä pakkaa ei enää rakenneta: kaikki avatut kortit menevät pakkaan, ja lähteet lisätään automaattisesti (0,7 per kortti, vähintään 20 korttia). Vastustajat pelaavat samalla periaatteella: n:s vastustaja avaa 1–4 boosteria (1, 1, 1, 2, 2, 3, 4) ja pelaa niistä omien elementtiensä kortit. Tekoälyn virheprosentit nostettiin 0,45–0,2:een.
+
+| Mittari | Tulos (500 runia) | Tavoite |
+|---------|-------------------|---------|
+| Vastustaja 1 voitetaan | 76 % | yli 75 % ✓ |
+| Koko run läpäistään | 3 % | 5–15 % ✗ |
+| Ottelun kesto 5–10 min | 51 %, mediaani 5,2 min | 80 % |
+
+Voittoprosentit vastustajittain: 76, 85, 75, 70, 45, 51, 37.
+
+Havaintoja:
+- **Pakan kokoaminen ei ole enää pelaajan käsissä,** joten vaihtelu kasvoi. Kokeiltiin lähdesuhteita 0,6–1,0, peilattuja vastustajapakkoja ja tekoälyn säätöä. Mikään ei nostanut läpäisyä yli 3 %:n.
+- **Loppupäässä pelaajan 50–60 kortin kolmen elementin pakka** häviää vastustajien suppeille kahden elementin pakoille.
+- **Mahdollisia jatkokeinoja** (ei toteutettu): lyhyempi run, pakan enimmäiskoko (esimerkiksi viimeisimmät boosterit) tai elementin valinta runin alussa. Näitä kannattaa arvioida oikeiden pelaajien kokemusten perusteella.

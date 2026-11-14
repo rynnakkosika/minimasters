@@ -65,16 +65,16 @@ test('run: opponents get harder and never easier (FR-006)', () => {
     assert(b.tier > a.tier, `tier ${b.id}`);
     assert(b.aiParams.searchDepth >= a.aiParams.searchDepth, `depth ${b.id}`);
     assert(b.aiParams.blunderRate <= a.aiParams.blunderRate, `blunders ${b.id}`);
-    const power = (o) => o.deckRecipe.uncommon + 2 * o.deckRecipe.rare + 3 * o.deckRecipe.mythic;
-    assert(power(b) >= power(a), `deck strength ${b.id}`);
+    assert(b.deckRecipe.boosters >= a.deckRecipe.boosters, `boosters ${b.id}`);
   }
   assertEqual(opponentAt(99).id, OPPONENTS[6].id);
 });
 
-test('run: opponent decks are 20–30 cards of their recipe elements', () => {
+test('run: opponents open 1–tier boosters and play only their own elements', () => {
   for (const o of OPPONENTS) {
     const deck = opponentDeck(o, 123);
-    assert(deck.length >= 20 && deck.length <= 30, `${o.id}: ${deck.length}`);
+    assert(o.deckRecipe.boosters >= 1 && o.deckRecipe.boosters <= o.tier, `${o.id} boosters`);
+    assert(deck.length >= 20, `${o.id}: ${deck.length}`);
     for (const id of deck) assert(o.deckRecipe.elements.includes(card(id).element), `${o.id}: ${id}`);
   }
 });

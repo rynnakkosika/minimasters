@@ -23,12 +23,12 @@ test('deck: every opened card goes into the deck, no deck building (FR-007)', ()
   }
 });
 
-test('deck: sources are added automatically, about 0.8 per card', () => {
+test('deck: sources are added automatically, about 0.7 per card', () => {
   const one = deckFromPool(POOL);
   assertEqual(deckSize(one), 20, 'one booster: 10 cards + 10 sources');
   const pool = [...POOL, ...openBoosterCards(6, allCards()), ...openBoosterCards(7, allCards())];
   const three = deckFromPool(pool);
-  assertEqual(basicCount(three), 24, 'three boosters: 30 cards + 24 sources');
+  assertEqual(basicCount(three), 21, 'three boosters: 30 cards + 21 sources');
 });
 
 test('deck: sources follow the element counts', () => {

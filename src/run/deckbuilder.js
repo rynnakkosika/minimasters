@@ -3,7 +3,7 @@
 import { card } from '../engine/db.js';
 
 export const MIN_DECK = 20;
-export const SOURCE_RATIO = 0.8; // sources per card: 10 cards → 8 sources (topped up to 20 cards in all)
+export const SOURCE_RATIO = 0.7; // sources per card: 10 cards → 7 sources (topped up to 20 cards in all)
 export const ELEMENTS = ['ahjo', 'kallio', 'usva'];
 export const BASIC_ID = { ahjo: 'ahjo-lahde', kallio: 'kallio-lahde', usva: 'usva-lahde' };
 

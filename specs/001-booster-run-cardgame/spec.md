@@ -35,8 +35,8 @@ Pelaaja käynnistää uuden runin, avaa boosterin animaation kera, valitsee siit
 **Acceptance Scenarios**:
 
 1. **Given** pelaaja on päävalikossa, **When** hän valitsee "Uusi run", **Then** hänelle avataan yksi booster ja sen kortit näytetään yksi kerrallaan tai kerralla rinnakkain.
-2. **Given** booster on avattu, **When** pelaaja siirtyy pakanrakennukseen, **Then** kaikki boosterin kortit ovat valittavissa ja perusresursseja voi lisätä rajattomasti kunnes pakan koko on sallittu.
-3. **Given** pelaaja ei halua rakentaa itse, **When** hän valitsee "Rakenna puolestani", **Then** peli kokoaa pelikelpoisen pakan, jossa on järkevä resurssimäärä ja elementtijakauma.
+2. **Given** booster on avattu, **When** pelaaja jatkaa, **Then** kaikki boosterin kortit ovat suoraan hänen pakassaan ja peli on lisännyt ilmaiset lähteet – pakkaa ei rakenneta (Minimasters-formaatin tapaan).
+3. **Given** pelaaja on vastustajan esittelyssä, **When** hän katsoo ruutua, **Then** hän näkee pakkansa koon ja energiakäyrän.
 4. **Given** pakka on pelikelpoinen, **When** pelaaja aloittaa ottelun, **Then** ottelu alkaa, molemmat nostavat aloituskäden ja vuorot etenevät sääntöjen mukaan.
 5. **Given** ottelu on käynnissä, **When** jommankumman elämät putoavat nollaan, **Then** ottelu päättyy ja voittaja näytetään selkeästi.
 
@@ -108,7 +108,7 @@ Pelaaja näkee kaikki korttisarjan kortit, joista runien aikana nähdyt on avatt
 
 ### Edge Cases
 
-- Booster sisältää lähes pelkkiä yhden elementin kortteja tai vain kalliita kortteja: boosterin koostumussäännöt (ks. FR-004) estävät pelikelvottomat boosterit, ja automaattinen rakennus tuottaa silti pelattavan pakan.
+- Booster sisältää lähes pelkkiä yhden elementin kortteja tai vain kalliita kortteja: boosterin koostumussäännöt (ks. FR-004) estävät pelikelvottomat boosterit, ja automaattinen pakka on silti pelattava.
 - Pelaaja yrittää aloittaa ottelun liian pienellä tai liian suurella pakalla: aloitus estetään ja syy kerrotaan.
 - Kumpikaan pelaaja ei voi tai halua edetä (esim. molemmat vain passaavat): ottelulla on vuororaja (25 vuoroa per pelaaja), jonka jälkeen enemmän elämää omaava voittaa; tasatilanteessa ottelu uusitaan samoilla pakoilla.
 - Pakka loppuu: jokainen nosto tyhjästä pakasta tekee nostajalle kasvavaa vahinkoa (1, 2, 3 …). Ottelu ratkeaa siis aina elämien kautta, eikä pöydän jumittuminen johda arpapeliin siitä, kenen pakka loppuu ensin. (Päätetty 2026-11-14 tasapainosimulaation perusteella; aiemmin tyhjästä nostaminen hävisi heti.)
@@ -130,13 +130,13 @@ Pelaaja näkee kaikki korttisarjan kortit, joista runien aikana nähdyt on avatt
 - **FR-005**: Run MUST päättyä ensimmäiseen häviöön tai seitsemänteen voittoon.
 - **FR-006**: Jokaisen ottelun vastustajan MUST olla vaikeampi tai yhtä vaikea kuin edellinen; vastustajia MUST olla vähintään 7 erilaista, ja kullakin oma nimi, ulkoasu ja pelityyli.
 
-**Pakanrakennus**
+**Pakka** *(muutettu 2026-11-14: pakkaa ei rakenneta, käyttäjän pyynnöstä)*
 
-- **FR-007**: Minipakan koon MUST olla 20–30 korttia, ja perusresursseja MUST olla rajattomasti saatavilla ilmaiseksi.
-- **FR-008**: Pelaajan MUST voida lisätä ja poistaa kortteja pakasta vapaasti ennen jokaista ottelua runin sisällä.
-- **FR-009**: Pakanrakennuksessa MUST näkyä energiakäyrä (korttien määrä hinnan mukaan) ja elementtijakauma.
-- **FR-010**: Pelin MUST tarjota "Rakenna puolestani" -toiminto, joka tuottaa pelikelpoisen pakan pelaajan senhetkisistä korteista.
-- **FR-011**: Pakanrakennuksen MUST olla mahdollista suorittaa alle 60 sekunnissa myös ilman automaattista rakennusta.
+- **FR-007**: Pelaajan pakka MUST olla kaikki runissa avatut kortit sekä automaattisesti lisätyt ilmaiset lähteet (noin 0,7 lähdettä korttia kohden, elementtien korttimäärien suhteessa, vähintään 20 korttia yhteensä).
+- **FR-008**: Pelaaja EI rakenna eikä muokkaa pakkaa; jokaisen uuden boosterin kortit lisätään pakkaan automaattisesti.
+- **FR-009**: Ennen ottelua MUST näkyä pakan koko, energiakäyrä (korttien määrä hinnan mukaan) ja elementtijakauma.
+- **FR-010**: Jokaisella elementillä, jonka kortteja pakassa on, MUST olla vähintään yksi lähde.
+- **FR-011**: Boosterin avaamisesta pääsee otteluun enintään kahdella napautuksella (Jatka → Taistele).
 
 **Ottelu**
 
@@ -172,7 +172,7 @@ Pelaaja näkee kaikki korttisarjan kortit, joista runien aikana nähdyt on avatt
 - **Korttisarja**: Kaikkien pelin korttien joukko, josta boosterit arvotaan.
 - **Booster**: 10 kortin satunnainen nippu, jonka koostumus noudattaa harvinaisuus- ja pelattavuussääntöjä.
 - **Run**: Yksi pelikierros alusta häviöön tai 7 voittoon. Sisältää runin kortit, nykyisen pakan, voittojen määrän ja kohdatut vastustajat.
-- **Minipakka**: Runin korteista ja perusresursseista koottu 20–30 kortin pakka.
+- **Minipakka**: Kaikki runin kortit ja automaattisesti lisätyt lähteet, vähintään 20 korttia.
 - **Vastustaja**: Tekoälyhahmo, jolla on nimi, ulkoasu, pelityyli, vaikeustaso ja pakka.
 - **Ottelu**: Kahden pelaajan kaksintaistelu; sisältää elämät, kädet, pöydän, pakat, poistopinot ja vuorohistorian.
 - **Pelaajaprofiili**: Ennätykset, kokoelman nähdyt kortit, asetukset ja opetuksen tila.
