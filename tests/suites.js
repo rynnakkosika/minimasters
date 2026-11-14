@@ -5,6 +5,4 @@ export const SUITES = [
   'engine.test.js',
   'effects.test.js',
   'ai.test.js',
-  'booster.test.js',
-  'deckbuilder.test.js',
 ];

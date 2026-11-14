@@ -1,0 +1,10 @@
+[
+  { "id": "kiire", "nameKey": "kw.kiire", "descKey": "kw.kiire.desc" },
+  { "id": "lapaisy", "nameKey": "kw.lapaisy", "descKey": "kw.lapaisy.desc" },
+  { "id": "vartija", "nameKey": "kw.vartija", "descKey": "kw.vartija.desc" },
+  { "id": "suoja", "nameKey": "kw.suoja", "descKey": "kw.suoja.desc" },
+  { "id": "kasvu", "nameKey": "kw.kasvu", "descKey": "kw.kasvu.desc" },
+  { "id": "imu", "nameKey": "kw.imu", "descKey": "kw.imu.desc" },
+  { "id": "piilo", "nameKey": "kw.piilo", "descKey": "kw.piilo.desc" },
+  { "id": "kaiku", "nameKey": "kw.kaiku", "descKey": "kw.kaiku.desc" }
+]

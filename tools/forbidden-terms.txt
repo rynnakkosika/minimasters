@@ -1,0 +1,63 @@
+# Originality deny list (spec FR-025, research R7). One term per line, matched as whole words,
+# case-insensitive, in every card name and generated rules text (fi + en).
+# Trademarks and product names
+Magic: The Gathering
+Gathering
+Wizards of the Coast
+Hasbro
+Hearthstone
+Blizzard
+Pokémon
+Pokemon
+Yu-Gi-Oh
+Konami
+Gwent
+Runeterra
+Riot Games
+Flesh and Blood
+Lorcana
+Marvel Snap
+Shadowverse
+Eternal
+# Distinctive terms of existing games
+Planeswalker
+Mana
+Tap
+Untap
+Tapped
+Mulligan
+Trample
+Haste
+Flying
+Lifelink
+Deathtouch
+Vigilance
+Hexproof
+Indestructible
+Menace
+Reach
+Flash
+Taunt
+Charge
+Divine Shield
+Battlecry
+Deathrattle
+Rush
+Ward
+Echo
+Overwhelm
+Elusive
+Lifesteal
+# Well-known card names
+Black Lotus
+Lightning Bolt
+Llanowar Elves
+Counterspell
+Giant Growth
+Dark Ritual
+Serra Angel
+Shivan Dragon
+Wrath of God
+Ancestral Recall
+Time Walk
+Fireball
