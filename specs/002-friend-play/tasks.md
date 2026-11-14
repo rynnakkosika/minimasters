@@ -22,10 +22,10 @@ description: "Task list for 002-friend-play (Pelaa kaverin kanssa)"
 
 ## Phase 1: Foundational – puhdas protokolla (blocks all stories)
 
-- [ ] T001 Luo `src/net/protocol.js`: `PROTOCOL_VERSION`, `makeCode`, `normalizeCode`, `inviteLink`, `codeFromUrl` (contracts/net-protocol.md)
-- [ ] T002 Lisää `src/net/protocol.js`: `mixSeed`, `friendDecks(seed)`, `createFriendMatch(seed)`, `replay(seed, log)` (data-model.md → MatchStart) [US2]
-- [ ] T003 Lisää `src/net/protocol.js`: `sanitizeGuestAction`, `hostHandle`, `guestHandle` (research R3, R4) [US3]
-- [ ] T004 [P] Kirjoita `tests/net.test.js` ja lisää se `tests/suites.js`-listaan: koodit, linkki, pakkojen determinismi ja pelikelpoisuus, aloittajan jakauma, tarkistus (väärä pelaaja, laiton, rikkinäinen, ylimääräiset kentät, peli ohi), act/reject/resync/sync, versio, täysi simuloitu ottelu kahden laitteen välillä (myös yhtäaikaiset mulliganit), replay
+- [X] T001 Luo `src/net/protocol.js`: `PROTOCOL_VERSION`, `makeCode`, `normalizeCode`, `inviteLink`, `codeFromUrl` (contracts/net-protocol.md)
+- [X] T002 Lisää `src/net/protocol.js`: `mixSeed`, `friendDecks(seed)`, `createFriendMatch(seed)`, `replay(seed, log)` (data-model.md → MatchStart) [US2]
+- [X] T003 Lisää `src/net/protocol.js`: `sanitizeGuestAction`, `hostHandle`, `guestHandle` (research R3, R4) [US3]
+- [X] T004 [P] Kirjoita `tests/net.test.js` ja lisää se `tests/suites.js`-listaan: koodit, linkki, pakkojen determinismi ja pelikelpoisuus, aloittajan jakauma, tarkistus (väärä pelaaja, laiton, rikkinäinen, ylimääräiset kentät, peli ohi), act/reject/resync/sync, versio, täysi simuloitu ottelu kahden laitteen välillä (myös yhtäaikaiset mulliganit), replay
 
 **Checkpoint**: `node tests/run-node.mjs` vihreä → commit.
 

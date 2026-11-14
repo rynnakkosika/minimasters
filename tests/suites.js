@@ -11,4 +11,5 @@ export const SUITES = [
   'save.test.js',
   'tutorial.test.js',
   'sw.test.js',
+  'net.test.js',
 ];
