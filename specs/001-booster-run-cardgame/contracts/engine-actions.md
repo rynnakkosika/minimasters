@@ -22,11 +22,13 @@ isGameOver(state) → { over: bool, winner, reason }
 | `playResource` | `uid` | `MAIN`, enintään 1 per vuoro |
 | `playUnit` | `uid`, `lane` 0–2, `targets?` | `MAIN`, kaistan oltava tyhjä ja energiaa riittävästi |
 | `playSpell` | `uid`, `targets?` | `MAIN` |
-| `declareAttackers` | `lanes: int[]` | `MAIN` → `COMBAT`; tyhjä lista ohittaa taistelun |
-| `endTurn` | — | `MAIN` tai taistelun jälkeen |
+| `declareAttackers` | `lanes: int[]` (ei tyhjä) | `MAIN`. Taistelu ratkaistaan ja vuoro päättyy samalla. |
+| `endTurn` | — | `MAIN`, ilman hyökkäystä |
 | `concede` | — | Milloin tahansa (FR-017) |
 
-`targets` on lista `uid`- tai `"player:0/1"`-viittauksia kortin `chosen*`-kohteille järjestyksessä.
+`targets` on yhden alkion lista: `uid` tai `"player:N"`. Kortilla on enintään yksi `chosen*`-kohdetyyppi, ja kaikki sen `chosen*`-vaikutukset kohdistuvat samaan kohteeseen.
+
+**Elementtivaatimus:** kortin pelaaminen vaatii energian lisäksi vähintään yhden saman elementin lähteen pelissä (neutraalit kortit eivät vaadi).
 
 ## Event (käyttöliittymän animaatioita varten)
 

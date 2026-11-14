@@ -13,7 +13,7 @@ Kaikki entiteetit ovat serialisoitavaa JSON-dataa. Staattinen sisältö (kortit,
 | `type` | `"resource" \| "unit" \| "spell"` | |
 | `element` | `"ahjo" \| "kallio" \| "usva" \| "neutral"` | Perusresurssit ovat oman elementtinsä kortteja |
 | `cost` | int 0–8 | Resursseilla 0 |
-| `rarity` | `"basic" \| "common" \| "uncommon" \| "rare" \| "mythic"` | `basic` = ilmainen perusresurssi, ei tule boostereista |
+| `rarity` | `"basic" \| "common" \| "uncommon" \| "rare" \| "mythic" \| "token"` | `basic` = ilmainen perusresurssi ja `token` = kutsuttu olento; kumpikaan ei tule boostereista |
 | `power` / `health` | int 0–12 | Vain `unit` |
 | `keywords` | string[] | Vain `data/cards/keywords.json`:n avainsanoja; koko pelissä ≤ 8 (FR-021) |
 | `effects` | Effect[] | Ks. [contracts/card-schema.md](./contracts/card-schema.md) |

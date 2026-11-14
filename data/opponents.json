@@ -1,0 +1,12 @@
+[
+  {
+    "id": "kisalli-rauta",
+    "nameKey": "opp.kisalli-rauta",
+    "styleKey": "opp.kisalli-rauta.style",
+    "portrait": "ui/opp-kisalli-rauta.webp",
+    "tier": 1,
+    "style": "midrange",
+    "aiParams": { "searchDepth": 1, "searchWidth": 8, "blunderRate": 0.25, "rollout": false },
+    "deckRecipe": { "elements": ["ahjo", "kallio"], "common": 7, "uncommon": 3, "rare": 0, "mythic": 0, "basics": 10 }
+  }
+]

@@ -47,14 +47,14 @@ Tiedosto on JSON-taulukko CardDef-olioita (kentät: [data-model.md](../data-mode
 |--------|----------------|
 | `trigger` | `onPlay`, `onDeath`, `onAttack`, `onDamaged`, `startOfTurn`, `endOfTurn` |
 | `op` | `damage`, `heal`, `draw`, `discard`, `buff` (amount = `{power, health}`), `debuff`, `destroy`, `bounce`, `summon` (cardId), `gainEnergy`, `shield`, `moveLane`, `copyToHand`, `reduceCost` |
-| `target` | `self`, `opponent`, `thisUnit`, `chosenEnemyUnit`, `chosenFriendlyUnit`, `chosenAnyUnit`, `opposingUnit` (sama kaista), `adjacentFriendly`, `allEnemyUnits`, `allFriendlyUnits`, `allUnits`, `randomEnemyUnit` |
+| `target` | `self`, `opponent`, `thisUnit`, `chosenEnemyUnit`, `chosenFriendlyUnit`, `chosenAnyUnit`, `chosenEnemyAny` (vihollisolento tai vastustaja), `opposingUnit` (sama kaista), `adjacentFriendly`, `allEnemyUnits`, `allFriendlyUnits`, `allUnits`, `randomEnemyUnit` |
 | `condition` | valinnainen: `{ "if": "lifeBelow", "value": 10 }`, `{ "if": "controlsElement", "value": "kallio" }`, `{ "if": "laneEmpty" }` |
 
-`chosen*`-kohteet vaativat pelaajalta valinnan kortin pelaamisen yhteydessä (ks. [engine-actions.md](./engine-actions.md)). Jos laillista kohdetta ei ole, korttia ei voi pelata.
+`chosen*`-kohteet toimivat vain `onPlay`-laukaisimella, ja kortilla voi olla vain yksi `chosen*`-tyyppi. Ne vaativat pelaajalta valinnan kortin pelaamisen yhteydessä (ks. [engine-actions.md](./engine-actions.md)). Jos laillista kohdetta ei ole, korttia ei voi pelata.
 
 ## Validointisäännöt
 
-1. `id` on uniikki ja `nameKey` löytyy molemmista kielitiedostoista.
+1. `id` on uniikki ja `nameKey` löytyy molemmista kielitiedostoista. Harvinaisuus `token` on kutsuttaville olennoille (`summon`); niitä ei tule boostereista.
 2. `unit` vaatii `power` ja `health`. Muilla tyypeillä niitä ei saa olla.
 3. `keywords` ⊆ `keywords.json`, ja `keywords.json` sisältää enintään 8 avainsanaa.
 4. Generoitu sääntöteksti on enintään 3 riviä (noin 90 merkkiä) sekä fi- että en-kielellä.
