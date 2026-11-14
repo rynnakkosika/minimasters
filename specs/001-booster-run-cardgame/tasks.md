@@ -31,12 +31,12 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 **Purpose**: Projektin runko, palvelin ja testiajuri
 
-- [ ] T001 Luo kansiorakenne plan.md:n mukaan (`src/engine`, `src/run`, `src/ai`, `src/data`, `src/storage`, `src/ui/screens`, `src/ui/components`, `src/ui/tutorial`, `data/cards`, `data/i18n`, `assets/art`, `assets/ui`, `assets/audio`, `tests`, `tools`) ja lisää `.gitignore` (`node_modules/`, `mobile/android/app/build/`, `mobile/keys/`, `mobile/dist/`)
-- [ ] T002 [P] Luo `index.html` (viewport, pystysuunta, lataa `styles.css` ja `src/main.js` moduulina) ja tyhjä `src/main.js`, joka näyttää "Loading…" ja reitittää näkymiin hash-reitityksellä
-- [ ] T003 [P] Luo `styles.css`: CSS-muuttujat elementtiväreille (ahjo, kallio, usva, neutral), vaalea ja tumma teema, kosketuskohteet vähintään 44×44 px ja asettelu, joka toimii 360 px leveydestä alkaen
-- [ ] T004 [P] Kopioi `tools/serve.ps1` Horse Racerista (`C:\Claude Code\Google Play apps\Horse Racer\tools\serve.ps1`) ja säädä portiksi 8080
-- [ ] T005 [P] Toteuta testiajuri: `tests/runner.js` (`test(name, fn)`, `assert`, `assertEqual`, `assertThrows`; Horse Racerin `tests/runner.js` mallina), `tests/index.html` (ajaa kaikki `*.test.js` selaimessa) ja `tests/run-node.mjs` (ajaa samat testit Nodella, exit-koodi 1 jos jokin epäonnistuu)
-- [ ] T006 [P] Luo `README.md`: pelin kuvaus, ajo (`tools/serve.ps1`), testit, alkuperäisyysperiaate (FR-025) ja linkki speksiin
+- [X] T001 Luo kansiorakenne plan.md:n mukaan (`src/engine`, `src/run`, `src/ai`, `src/data`, `src/storage`, `src/ui/screens`, `src/ui/components`, `src/ui/tutorial`, `data/cards`, `data/i18n`, `assets/art`, `assets/ui`, `assets/audio`, `tests`, `tools`) ja lisää `.gitignore` (`node_modules/`, `mobile/android/app/build/`, `mobile/keys/`, `mobile/dist/`)
+- [X] T002 [P] Luo `index.html` (viewport, pystysuunta, lataa `styles.css` ja `src/main.js` moduulina) ja tyhjä `src/main.js`, joka näyttää "Loading…" ja reitittää näkymiin hash-reitityksellä
+- [X] T003 [P] Luo `styles.css`: CSS-muuttujat elementtiväreille (ahjo, kallio, usva, neutral), vaalea ja tumma teema, kosketuskohteet vähintään 44×44 px ja asettelu, joka toimii 360 px leveydestä alkaen
+- [X] T004 [P] Kopioi `tools/serve.ps1` Horse Racerista (`C:\Claude Code\Google Play apps\Horse Racer\tools\serve.ps1`) ja säädä portiksi 8080
+- [X] T005 [P] Toteuta testiajuri: `tests/runner.js` (`test(name, fn)`, `assert`, `assertEqual`, `assertThrows`; Horse Racerin `tests/runner.js` mallina), `tests/index.html` (ajaa kaikki `*.test.js` selaimessa) ja `tests/run-node.mjs` (ajaa samat testit Nodella, exit-koodi 1 jos jokin epäonnistuu)
+- [X] T006 [P] Luo `README.md`: pelin kuvaus, ajo (`tools/serve.ps1`), testit, alkuperäisyysperiaate (FR-025) ja linkki speksiin
 
 **Checkpoint**: `node tests/run-node.mjs` ajaa (0 testiä) ja `index.html` aukeaa → commit
 
