@@ -41,3 +41,20 @@ Voittoprosentit vastustajittain: 79, 89, 72, 55, 49, 60, 58. Elementtien voittop
 Avoinna:
 - **Ottelut ovat arvion mukaan usein alle 5 minuuttia.** Arvio perustuu oletettuun vuoron kestoon, joten se tarkistetaan oikeilla pelaajilla (SC-002).
 - **Vastustaja 2 on helpompi kuin 1.** Järjestys kannattaa tarkistaa laajemman korttisarjan myötä.
+
+## 2026-11-14 — täysi sarja: 120 boosterikorttia
+
+Lisätty 90 korttia (30 per elementti) ja yksi kutsuttava olento (Taimi). Jakauma per elementti: 20 tavallista, 12 epätavallista, 6 harvinaista ja 2 myyttistä. Vastustajien tekoälyä ja myöhäisten vastustajien pakkoja kevennettiin hieman.
+
+| Mittari | Tulos (400 runia) | Tavoite |
+|---------|-------------------|---------|
+| Vastustaja 1 voitetaan | 77 % | yli 75 % ✓ |
+| Koko run läpäistään | 5 % | 5–15 % ✓ (alarajalla) |
+| Ottelun kesto 5–10 min | 58 %, mediaani 5,3 min, pisin 12,1 min | 80 %, ei yli 15 min |
+
+Voittoprosentit vastustajittain: 77, 89, 69, 57, 59, 58, 54. Elementit: Kallio 74 %, Ahjo 73 %, Usva 68 %.
+
+Havaintoja:
+- **Pakan sisältö vaikuttaa enemmän kuin tekoälyn parametrit.** Haun syvyyden ja virheprosentin säätö muutti tuloksia vain muutaman prosenttiyksikön, harvinaisten korttien määrä selvästi enemmän.
+- **Vastustaja 2 on edelleen helpompi kuin 1 ja 3.** Ensimmäinen vastustaja on silti tarkoituksella pehmeä, ja pelaajan ensimmäinen pakka on yhden boosterin pakka.
+- **Seuraava tarkistus pitää tehdä oikeilla pelaajilla:** ottelun kesto (SC-002) ja aloittelijan läpäisy (SC-003, SC-006).

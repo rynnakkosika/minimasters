@@ -1,7 +1,7 @@
 // Offline support (FR-026). The whole game is precached at install, so it works with no
 // connection at all. Requests go to the network first so a new version shows up at once;
 // the cache answers when there is no connection. tools/update-sw.mjs regenerates the list.
-const CACHE = 'minimasters-v2';
+const CACHE = 'minimasters-v3';
 const FILES = [
   './',
   'data/cards/keywords.json',

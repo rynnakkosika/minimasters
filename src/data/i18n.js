@@ -37,8 +37,9 @@ function capitalize(s) {
 /** Rules text for one effect, e.g. "Pelattaessa: 1 vahinkoa: valittu vihollinen". */
 export function effectText(effect, isSpell, loc = locale) {
   const specific = `effect.${effect.op}.${effect.target}`;
-  const key = has(specific, loc) ? specific : `effect.${effect.op}`;
+  let key = has(specific, loc) ? specific : `effect.${effect.op}`;
   const amount = effect.amount ?? 0;
+  if (typeof amount === 'number' && amount > 1 && has(`${key}.plural`, loc)) key = `${key}.plural`;
   const params = {
     amount: typeof amount === 'object' ? '' : amount,
     power: typeof amount === 'object' ? amount.power ?? 0 : 0,

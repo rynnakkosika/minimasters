@@ -181,10 +181,10 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 ### Sisältö (FR-024, FR-025)
 
-- [ ] T059 [P] Laajenna `data/cards/set-core.json`: Ahjo-elementti 40 boosterikorttiin (aggressiivinen: kiire, läpäisy, suora vahinko)
-- [ ] T060 [P] Laajenna `data/cards/set-core.json`: Kallio-elementti 40 boosterikorttiin (puolustava: vartija, suoja, kasvu, parannus)
-- [ ] T061 [P] Laajenna `data/cards/set-core.json`: Usva-elementti 40 boosterikorttiin (ovela: piilo, bounce, nosto, kaiku)
-- [ ] T062 Tarkista sarja `node tools/validate-cards.mjs`: vähintään 120 boosterikorttia, jakauma noin 60 common, 36 uncommon, 18 rare ja 6 mythic, käännökset fi/en ja kieltolista puhdas. Säädä korttien arvoja `node tests/balance.sim.js --runs 1000` perusteella, kunnes SC-002 ja SC-006 täyttyvät.
+- [X] T059 [P] Laajenna `data/cards/set-core.json`: Ahjo-elementti 40 boosterikorttiin (aggressiivinen: kiire, läpäisy, suora vahinko)
+- [X] T060 [P] Laajenna `data/cards/set-core.json`: Kallio-elementti 40 boosterikorttiin (puolustava: vartija, suoja, kasvu, parannus)
+- [X] T061 [P] Laajenna `data/cards/set-core.json`: Usva-elementti 40 boosterikorttiin (ovela: piilo, bounce, nosto, kaiku)
+- [X] T062 Tarkista sarja `node tools/validate-cards.mjs`: vähintään 120 boosterikorttia, jakauma noin 60 common, 36 uncommon, 18 rare ja 6 mythic, käännökset fi/en ja kieltolista puhdas. Säädä korttien arvoja `node tests/balance.sim.js --runs 1000` perusteella, kunnes SC-002 ja SC-006 täyttyvät.
 - [ ] T063 [P] Valitse alkuperäinen kauppanimi ja elementtien lopulliset nimet, ja päivitä `data/i18n/*.json`, `index.html` ja `README.md`. Tarkista, ettei nimi ole tunnetun pelin tavaramerkki.
 - [ ] T064 [P] Tuota korttien kuvitus kansioon `assets/art/` (WebP, yhtenäinen oma taidesuunta, kehotteissa ei mainita olemassa olevia pelejä tai taiteilijoita) sekä elementtisymbolit ja kehykset kansioon `assets/ui/`
 - [ ] T065 [P] Lisää äänet kansioon `assets/audio/` (kortin pelaus, hyökkäys, voitto, häviö, booster) ja mykistys asetuksiin
