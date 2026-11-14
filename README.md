@@ -11,6 +11,7 @@ Pelin nimi, maailma, kortit, taide ja säännöt ovat alkuperäisiä. Peli ei k�
 - Kortin pelaaminen vaatii energiaa ja vähintään yhden saman elementin lähteen (Ahjo, Kallio tai Usva).
 - Pöydällä on 3 kaistaa. Olento hyökkää omaan kaistaansa, ja vastakkainen olento puolustaa automaattisesti. Tyhjästä kaistasta vahinko menee pelaajaan.
 - Hyökkäys päättää vuoron.
+- Jos pakka on tyhjä, jokainen nosto tekee sinulle kasvavaa vahinkoa: 1, 2, 3 …
 
 ## Ajo
 

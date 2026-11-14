@@ -123,11 +123,18 @@ test('engine: life at 0 ends the game', () => {
   assertEqual(legalActions(s, 0), []);
 });
 
-test('engine: drawing from an empty deck loses', () => {
+test('engine: drawing from an empty deck deals growing damage (fatigue)', () => {
   let s = blankMatch();
   s.players[1].deck = [];
   s = act(s, { type: 'endTurn', player: 0 });
-  assertEqual(isGameOver(s), { over: true, winner: 0, reason: 'decked' });
+  assertEqual([s.players[1].life, s.players[1].fatigue], [19, 1]);
+  s = act(s, { type: 'endTurn', player: 1 });
+  s = act(s, { type: 'endTurn', player: 0 });
+  assertEqual([s.players[1].life, s.players[1].fatigue], [17, 2]);
+  s.players[1].life = 3;
+  s = act(s, { type: 'endTurn', player: 1 });
+  s = act(s, { type: 'endTurn', player: 0 });
+  assertEqual(isGameOver(s), { over: true, winner: 0, reason: 'life' });
 });
 
 test('engine: conceding loses', () => {

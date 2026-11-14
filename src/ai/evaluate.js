@@ -27,8 +27,8 @@ export function evaluate(s, me, w) {
   // Life matters more when it is low: being at 3 is much worse than at 13.
   const lifeScore = (life) => life + Math.max(0, 8 - life) * 1.5;
   const energyW = w.energy * (a.energyMax < 6 ? 1.5 : 0.2);
-  // Drawing from an empty deck loses, so extra draws become a liability near the end of the deck.
-  const deckRisk = (pl) => Math.max(0, 3 - pl.deck.length) * 3;
+  // Drawing from an empty deck hurts more every time, so extra draws become a liability near the end.
+  const deckRisk = (pl) => Math.max(0, 3 - pl.deck.length) * (1 + pl.fatigue);
   return (
     -deckRisk(a) +
     deckRisk(b) +

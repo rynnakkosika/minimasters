@@ -59,7 +59,7 @@
   "match.lost": "Hävisit",
   "match.draw": "Tasapeli – ottelu uusitaan",
   "match.reason.life": "Elämät loppuivat.",
-  "match.reason.decked": "Pakka loppui.",
+  "ev.fatigue": "{who}: pakka on tyhjä, {amount} vahinkoa",
   "match.reason.turnLimit": "Vuororaja täyttyi.",
   "match.reason.concede": "Luovutus.",
   "match.toMenu": "Päävalikkoon",

@@ -38,7 +38,7 @@ Pelaaja käynnistää uuden runin, avaa boosterin animaation kera, valitsee siit
 2. **Given** booster on avattu, **When** pelaaja siirtyy pakanrakennukseen, **Then** kaikki boosterin kortit ovat valittavissa ja perusresursseja voi lisätä rajattomasti kunnes pakan koko on sallittu.
 3. **Given** pelaaja ei halua rakentaa itse, **When** hän valitsee "Rakenna puolestani", **Then** peli kokoaa pelikelpoisen pakan, jossa on järkevä resurssimäärä ja elementtijakauma.
 4. **Given** pakka on pelikelpoinen, **When** pelaaja aloittaa ottelun, **Then** ottelu alkaa, molemmat nostavat aloituskäden ja vuorot etenevät sääntöjen mukaan.
-5. **Given** ottelu on käynnissä, **When** jommankumman elämät putoavat nollaan tai pakka loppuu kesken nostovaiheen, **Then** ottelu päättyy ja voittaja näytetään selkeästi.
+5. **Given** ottelu on käynnissä, **When** jommankumman elämät putoavat nollaan, **Then** ottelu päättyy ja voittaja näytetään selkeästi.
 
 ---
 
@@ -111,7 +111,7 @@ Pelaaja näkee kaikki korttisarjan kortit, joista runien aikana nähdyt on avatt
 - Booster sisältää lähes pelkkiä yhden elementin kortteja tai vain kalliita kortteja: boosterin koostumussäännöt (ks. FR-004) estävät pelikelvottomat boosterit, ja automaattinen rakennus tuottaa silti pelattavan pakan.
 - Pelaaja yrittää aloittaa ottelun liian pienellä tai liian suurella pakalla: aloitus estetään ja syy kerrotaan.
 - Kumpikaan pelaaja ei voi tai halua edetä (esim. molemmat vain passaavat): ottelulla on vuororaja (25 vuoroa per pelaaja), jonka jälkeen enemmän elämää omaava voittaa; tasatilanteessa ottelu uusitaan samoilla pakoilla.
-- Pakka loppuu: pelaaja, jonka pitäisi nostaa tyhjästä pakasta, häviää.
+- Pakka loppuu: jokainen nosto tyhjästä pakasta tekee nostajalle kasvavaa vahinkoa (1, 2, 3 …). Ottelu ratkeaa siis aina elämien kautta, eikä pöydän jumittuminen johda arpapeliin siitä, kenen pakka loppuu ensin. (Päätetty 2026-11-14 tasapainosimulaation perusteella; aiemmin tyhjästä nostaminen hävisi heti.)
 - Aloituskäsi on huono (ei resursseja tai pelkkiä resursseja): pelaaja saa kerran ottelun alussa vaihtaa koko käden uuteen.
 - Sovellus kaatuu tai akku loppuu kesken siirron: tila palautetaan viimeisestä valmiista toiminnosta.
 - Puhelimen kieli on muu kuin tuettu kieli: peli näytetään englanniksi.

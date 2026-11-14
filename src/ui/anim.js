@@ -52,6 +52,9 @@ export function createAnimator(getSpeed) {
         case 'resourcePlayed':
           if (e.player !== viewer) await banner(t('ev.resourcePlayed', { who: t('match.opponent') }), 600);
           break;
+        case 'fatigue':
+          await banner(t('ev.fatigue', { who: e.player === viewer ? t('match.you') : t('match.opponent'), amount: e.amount }), 700);
+          break;
         case 'turnStarted':
           await banner(e.player === viewer ? t('match.yourTurn') : t('match.opponentTurn'), 650);
           break;

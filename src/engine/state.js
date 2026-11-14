@@ -51,7 +51,7 @@ function newPlayer() {
     lanes: Array(LANES).fill(null),
     mulliganDone: false,
     turnsTaken: 0,
-    deckedOut: false,
+    fatigue: 0, // how many times this player has drawn from an empty deck
   };
 }
 
@@ -85,14 +85,17 @@ export function cloneState(s) {
   return structuredClone(s);
 }
 
-/** Draws n cards. Drawing from an empty deck marks the player as decked (loses). */
+/** Draws n cards. Each draw from an empty deck deals growing damage: 1, 2, 3 … (fatigue). */
 export function drawCards(ctx, p, n) {
   const pl = ctx.s.players[p];
   for (let i = 0; i < n; i++) {
     const inst = pl.deck.shift();
     if (!inst) {
-      pl.deckedOut = true;
-      return;
+      pl.fatigue++;
+      pl.life -= pl.fatigue;
+      emit(ctx, 'fatigue', { player: p, amount: pl.fatigue });
+      emit(ctx, 'damageDealt', { target: `player:${p}`, amount: pl.fatigue });
+      continue;
     }
     if (pl.hand.length >= MAX_HAND) {
       pl.discard.push(inst.cardId);

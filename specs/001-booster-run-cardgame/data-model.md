@@ -62,16 +62,16 @@ Uusi run keskeneräisen päälle vaatii vahvistuksen ja hylkää vanhan (US4).
 | `turn` | Vuoronumero; `activePlayer` 0 \| 1 |
 | `phase` | `MULLIGAN \| DRAW \| MAIN \| COMBAT \| END \| GAME_OVER` |
 | `players[2]` | PlayerState |
-| `winner` | 0 \| 1 \| null; `endReason`: `life \| decked \| turnLimit \| concede` |
+| `winner` | 0 \| 1 \| null; `endReason`: `life \| turnLimit \| concede` |
 | `log` | Toimintoloki (toistettavuus ja vianetsintä) |
 
 ### PlayerState
-`life` (alussa 20), `energyMax`, `energy`, `resourcePlayedThisTurn`, `deck` (CardInstance[], järjestetty), `hand`, `discard`, `lanes[3]` (UnitInstance | null), `mulliganUsed`.
+`life` (alussa 20), `energyMax`, `energy`, `resourcePlayedThisTurn`, `deck` (CardInstance[], järjestetty), `hand`, `discard`, `lanes[3]` (UnitInstance | null), `mulliganUsed`, `fatigue` (tyhjästä pakasta nostojen määrä; seuraava nosto tekee `fatigue + 1` vahinkoa).
 
 ### CardInstance / UnitInstance
 `uid` (ottelun sisäinen), `cardId`. Olennoilla lisäksi `damage`, `buffs` (power/health-muutokset), `status` (`summoningSick`, `shielded`, `hidden`, …).
 
-**Vuoron vaiheet**: `DRAW` (nosto; jos pakka on tyhjä → häviö) → `MAIN` (enintään 1 resurssi, kortit energialla, olennot tyhjiin kaistoihin) → `COMBAT` (pelaaja valitsee hyökkäävät olennot; kukin hyökkää omaan kaistaansa) → `END` (vaikutukset; vuororaja: kun kumpikin on pelannut 25 vuoroa, enemmän elämää voittaa ja tasatilanteessa ottelu uusitaan).
+**Vuoron vaiheet**: `DRAW` (nosto; jos pakka on tyhjä, nostaja ottaa kasvavaa vahinkoa 1, 2, 3 …) → `MAIN` (enintään 1 resurssi, kortit energialla, olennot tyhjiin kaistoihin) → `COMBAT` (pelaaja valitsee hyökkäävät olennot; kukin hyökkää omaan kaistaansa) → `END` (vaikutukset; vuororaja: kun kumpikin on pelannut 25 vuoroa, enemmän elämää voittaa ja tasatilanteessa ottelu uusitaan).
 
 ### Profile
 `version`, `records` (`bestRunWins`, `runsCompleted`, `runsWon`, `matchesPlayed`), `collectionSeen` (CardId[]), `settings` (`locale`, `animSpeed`, `sound`, `hints`), `tutorialDone` (bool).

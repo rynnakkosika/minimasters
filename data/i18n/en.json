@@ -59,7 +59,7 @@
   "match.lost": "You lost",
   "match.draw": "Draw – the match is replayed",
   "match.reason.life": "Life ran out.",
-  "match.reason.decked": "The deck ran out.",
+  "ev.fatigue": "{who}: deck is empty, {amount} damage",
   "match.reason.turnLimit": "Turn limit reached.",
   "match.reason.concede": "Conceded.",
   "match.toMenu": "Main menu",

@@ -10,15 +10,14 @@ export function endGame(ctx, winner, reason) {
   emit(ctx, 'gameOver', { winner, reason });
 }
 
-/** Ends the game if a player is at 0 life or drew from an empty deck. Returns true when over. */
+/** Ends the game if a player is at 0 life. Returns true when over. */
 export function checkGameOver(ctx) {
   const s = ctx.s;
   if (s.phase === 'GAME_OVER') return true;
-  const lost = s.players.map((pl) => pl.life <= 0 || pl.deckedOut);
+  const lost = s.players.map((pl) => pl.life <= 0);
   if (!lost[0] && !lost[1]) return false;
-  const reason = s.players.some((pl) => pl.life <= 0) ? 'life' : 'decked';
   const winner = lost[0] && lost[1] ? null : lost[0] ? 1 : 0;
-  endGame(ctx, winner, reason);
+  endGame(ctx, winner, 'life');
   return true;
 }
 
