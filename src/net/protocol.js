@@ -6,7 +6,7 @@
 import { allCards } from '../engine/db.js';
 import { createMatch, applyAction, legalActions, actionKey } from '../engine/index.js';
 import { openBoosterCards } from '../run/booster.js';
-import * as deckbuilder from '../run/deckbuilder.js';
+import { deckFromPool, deckList } from '../run/deckbuilder.js';
 
 export const PROTOCOL_VERSION = 1;
 export const HOST = 0;
@@ -56,16 +56,15 @@ export function mixSeed(seed, p) {
   return (x ^ (x >>> 16)) >>> 0;
 }
 
-// The run's own deck rule for a fresh pool: deckFromPool (every card + sources) where it exists,
-// the older autoBuild ("Build for me") otherwise.
-const buildDeck = deckbuilder.deckFromPool || deckbuilder.autoBuild;
-
-/** Both players' boosters and decks. Same seed → same decks on every device. */
+/**
+ * Both players' boosters and decks, by the run's own rule (every opened card plus sources).
+ * Same seed → same decks on every device.
+ */
 export function friendDecks(seed) {
   return [HOST, GUEST].map((p) => {
     const booster = openBoosterCards(mixSeed(seed, p), allCards());
-    const built = buildDeck(booster);
-    return { booster, built, deck: deckbuilder.deckList(built) };
+    const built = deckFromPool(booster);
+    return { booster, built, deck: deckList(built) };
   });
 }
 
