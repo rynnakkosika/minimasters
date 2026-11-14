@@ -25,8 +25,39 @@ export function newRun(seed, now = new Date()) {
     opponentId: null,
     boosters: [],
     match: null,
+    // played: how often the player played each card; damage: damage dealt by each of the player's cards.
+    stats: { played: {}, damage: {}, matches: 0 },
     startedAt: now.toISOString(),
   };
+}
+
+/** Adds the player's (player 0) card plays and damage from a batch of engine events to the run stats. */
+export function recordEvents(run, events) {
+  const r = clone(run);
+  r.stats ??= { played: {}, damage: {}, matches: 0 };
+  for (const e of events) {
+    if (e.type === 'cardPlayed' && e.player === 0) r.stats.played[e.cardId] = (r.stats.played[e.cardId] || 0) + 1;
+    if (e.type === 'damageDealt' && e.sourceOwner === 0 && e.sourceCard) {
+      r.stats.damage[e.sourceCard] = (r.stats.damage[e.sourceCard] || 0) + e.amount;
+    }
+  }
+  return r;
+}
+
+/** The run's best card: most damage dealt, then most played. */
+export function bestCard(run) {
+  const s = run.stats || { played: {}, damage: {} };
+  const ids = new Set([...Object.keys(s.played), ...Object.keys(s.damage)]);
+  let best = null;
+  let bestKey = [-1, -1];
+  for (const id of ids) {
+    const key = [s.damage[id] || 0, s.played[id] || 0];
+    if (key[0] > bestKey[0] || (key[0] === bestKey[0] && key[1] > bestKey[1])) {
+      best = id;
+      bestKey = key;
+    }
+  }
+  return best;
 }
 
 export function openBooster(run) {
@@ -76,6 +107,8 @@ export function finishMatch(run) {
   }
   const winner = run.match.winner;
   let r = clone(run);
+  r.stats ??= { played: {}, damage: {}, matches: 0 };
+  r.stats.matches++;
   if (winner === null) {
     r.status = 'DECKBUILDING';
     r.match = null;

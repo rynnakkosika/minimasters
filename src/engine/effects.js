@@ -31,10 +31,11 @@ export function targetCandidates(s, p, kind) {
   }
 }
 
-export function damagePlayer(ctx, p, amount) {
+/** src = { owner, cardId } of whatever dealt the damage (for run statistics). */
+export function damagePlayer(ctx, p, amount, src = null) {
   if (amount <= 0) return 0;
   ctx.s.players[p].life -= amount;
-  emit(ctx, 'damageDealt', { target: playerRef(p), amount });
+  emit(ctx, 'damageDealt', { target: playerRef(p), amount, ...srcInfo(src) });
   return amount;
 }
 
@@ -46,7 +47,11 @@ export function healPlayer(ctx, p, amount) {
 }
 
 /** Damages a unit; a bulwark (shield) absorbs the whole hit. Returns the damage actually dealt. */
-export function damageUnit(ctx, uid, amount) {
+function srcInfo(src) {
+  return src ? { sourceOwner: src.owner, sourceCard: src.cardId } : {};
+}
+
+export function damageUnit(ctx, uid, amount, src = null) {
   const found = findUnit(ctx.s, uid);
   if (!found || amount <= 0) return 0;
   const u = found.unit;
@@ -56,7 +61,7 @@ export function damageUnit(ctx, uid, amount) {
     return 0;
   }
   u.damage += amount;
-  emit(ctx, 'damageDealt', { target: uid, amount });
+  emit(ctx, 'damageDealt', { target: uid, amount, ...srcInfo(src) });
   if (u.damage < u.health) {
     runEffects(ctx, card(u.cardId), 'onDamaged', { owner: found.owner, uid, lane: found.lane });
   }
@@ -165,7 +170,7 @@ function applyOp(ctx, ef, target, source) {
     const p = target.player;
     switch (ef.op) {
       case 'damage':
-        return damagePlayer(ctx, p, amount);
+        return damagePlayer(ctx, p, amount, source);
       case 'heal':
         return healPlayer(ctx, p, amount);
       case 'draw':
@@ -206,7 +211,7 @@ function applyOp(ctx, ef, target, source) {
   const u = found.unit;
   switch (ef.op) {
     case 'damage':
-      return damageUnit(ctx, u.uid, amount);
+      return damageUnit(ctx, u.uid, amount, source);
     case 'heal':
       u.damage = Math.max(0, u.damage - amount);
       emit(ctx, 'healed', { target: u.uid, amount });
@@ -257,6 +262,7 @@ function applyOp(ctx, ef, target, source) {
  */
 export function runEffects(ctx, def, trigger, source, chosenRef = null, resolveDeaths = true) {
   if (!def) return;
+  source = { ...source, cardId: def.id };
   for (const ef of def.effects || []) {
     if (ef.trigger !== trigger) continue;
     if (ctx.s.phase === 'GAME_OVER') return;

@@ -114,16 +114,16 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 ### Tests for User Story 2
 
-- [ ] T039 [P] [US2] Kirjoita `tests/run.test.js`: tilakone `IN_MATCH → OPENING_BOOSTER` (voitto, wins < 7), `→ COMPLETED_VICTORY` (wins = 7) ja `→ COMPLETED_DEFEAT` (häviö tai luovutus), tasapelin (`turnLimit`, `winner: null`) uusinta samoilla pakoilla, poolin kasvu 10 kortilla per voitto ja vastustajan tier, joka ei koskaan laske (FR-006)
+- [X] T039 [P] [US2] Kirjoita `tests/run.test.js`: tilakone `IN_MATCH → OPENING_BOOSTER` (voitto, wins < 7), `→ COMPLETED_VICTORY` (wins = 7) ja `→ COMPLETED_DEFEAT` (häviö tai luovutus), tasapelin (`turnLimit`, `winner: null`) uusinta samoilla pakoilla, poolin kasvu 10 kortilla per voitto ja vastustajan tier, joka ei koskaan laske (FR-006)
 
 ### Implementation for User Story 2
 
-- [ ] T040 [US2] Täydennä `data/opponents.json` seitsemään vastustajaan (`tier` 1–7, tyylit `aggro | control | midrange | swarm | tempo`, kasvava `searchWidth`, laskeva `blunderRate` ja vahvempi `deckRecipe`). Jokaisella on oma alkuperäinen nimi, `nameKey` ja `portrait` (paikkamerkki) (FR-006).
-- [ ] T041 [US2] Laajenna `src/run/run.js`: `finishMatch` toteuttaa koko tilakoneen (FR-005), pakkaa voi muokata ennen jokaista ottelua (FR-008) ja `src/run/ladder.js` valitsee vastustajan `opponentIndex`-arvon mukaan
-- [ ] T042 [P] [US2] Toteuta `src/ui/screens/opponent-intro.js`: vastustajan nimi, muotokuva, tyylin kuvaus ja "ottelu X/7"
-- [ ] T043 [P] [US2] Toteuta `src/ui/screens/result.js` (voittoruutu → seuraava booster) ja `src/ui/screens/run-summary.js` (voitot, paras kortti eli eniten vahinkoa tehnyt tai eniten pelattu, avatut boosterit, oma ennätys ja "Uusi run"). Runin voitosta (7/7) näytetään erillinen palkintoruutu.
-- [ ] T044 [US2] Kytke runin kulku `src/main.js`:n reititykseen: ottelu → tulos → booster (uusi) → pakanrakennus → vastustajan esittely → ottelu ([contracts/ui-screens.md](./contracts/ui-screens.md))
-- [ ] T045 [US2] Kirjoita `tests/balance.sim.js` (`--runs N`): simuloi täydet runit tekoälypelaajalla (`autoBuild` jokaisen boosterin jälkeen) ja raportoi ottelun pituuden vuoroina ja arvioituna kestona, voitto-% vastustajittain, runin läpäisy-% sekä elementtien voittojakauman. Tavoitteet: vastustaja 1 yli 75 %, koko run 5–15 % (SC-006).
+- [X] T040 [US2] Täydennä `data/opponents.json` seitsemään vastustajaan (`tier` 1–7, tyylit `aggro | control | midrange | swarm | tempo`, kasvava `searchWidth`, laskeva `blunderRate` ja vahvempi `deckRecipe`). Jokaisella on oma alkuperäinen nimi, `nameKey` ja `portrait` (paikkamerkki) (FR-006).
+- [X] T041 [US2] Laajenna `src/run/run.js`: `finishMatch` toteuttaa koko tilakoneen (FR-005), pakkaa voi muokata ennen jokaista ottelua (FR-008) ja `src/run/ladder.js` valitsee vastustajan `opponentIndex`-arvon mukaan
+- [X] T042 [P] [US2] Toteuta `src/ui/screens/opponent-intro.js`: vastustajan nimi, muotokuva, tyylin kuvaus ja "ottelu X/7"
+- [X] T043 [P] [US2] Toteuta `src/ui/screens/result.js` (voittoruutu → seuraava booster) ja `src/ui/screens/run-summary.js` (voitot, paras kortti eli eniten vahinkoa tehnyt tai eniten pelattu, avatut boosterit, oma ennätys ja "Uusi run"). Runin voitosta (7/7) näytetään erillinen palkintoruutu.
+- [X] T044 [US2] Kytke runin kulku `src/main.js`:n reititykseen: ottelu → tulos → booster (uusi) → pakanrakennus → vastustajan esittely → ottelu ([contracts/ui-screens.md](./contracts/ui-screens.md))
+- [X] T045 [US2] Kirjoita `tests/balance.sim.js` (`--runs N`): simuloi täydet runit tekoälypelaajalla (`autoBuild` jokaisen boosterin jälkeen) ja raportoi ottelun pituuden vuoroina ja arvioituna kestona, voitto-% vastustajittain, runin läpäisy-% sekä elementtien voittojakauman. Tavoitteet: vastustaja 1 yli 75 %, koko run 5–15 % (SC-006).
 
 **Checkpoint**: Koko run pelattavissa alusta loppuun. Ensimmäinen balanssiraportti → commit
 

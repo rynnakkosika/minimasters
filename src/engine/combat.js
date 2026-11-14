@@ -33,19 +33,21 @@ export function resolveCombat(ctx, p, lanes) {
     const d = defenderFor(opp.lanes, lane);
     if (d) {
       emit(ctx, 'blocked', { uid: d.uid, attacker: a.uid });
+      const aSrc = { owner: p, cardId: a.cardId };
+      const dSrc = { owner: other(p), cardId: d.cardId };
       const aPow = a.power;
       const dPow = d.power;
       const remaining = d.health - d.damage;
       const wasShielded = d.shielded;
-      let dealt = damageUnit(ctx, d.uid, aPow);
+      let dealt = damageUnit(ctx, d.uid, aPow, aSrc);
       if (hasKw(a, 'lapaisy') && !wasShielded && aPow > remaining) {
-        dealt = remaining + damagePlayer(ctx, other(p), aPow - remaining);
+        dealt = remaining + damagePlayer(ctx, other(p), aPow - remaining, aSrc);
       }
       if (hasKw(a, 'imu')) healPlayer(ctx, p, dealt);
-      const back = damageUnit(ctx, a.uid, dPow);
+      const back = damageUnit(ctx, a.uid, dPow, dSrc);
       if (hasKw(d, 'imu')) healPlayer(ctx, other(p), back);
     } else {
-      const dealt = damagePlayer(ctx, other(p), a.power);
+      const dealt = damagePlayer(ctx, other(p), a.power, { owner: p, cardId: a.cardId });
       if (hasKw(a, 'imu')) healPlayer(ctx, p, dealt);
     }
     processDeaths(ctx);

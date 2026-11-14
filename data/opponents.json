@@ -6,7 +6,171 @@
     "portrait": "ui/opp-kisalli-rauta.webp",
     "tier": 1,
     "style": "midrange",
-    "aiParams": { "searchDepth": 1, "searchWidth": 8, "blunderRate": 0.25, "rollout": false },
-    "deckRecipe": { "elements": ["ahjo", "kallio"], "common": 7, "uncommon": 3, "rare": 0, "mythic": 0, "basics": 10 }
+    "aiParams": {
+      "searchDepth": 1,
+      "searchWidth": 6,
+      "blunderRate": 0.45,
+      "rollout": false
+    },
+    "deckRecipe": {
+      "elements": [
+        "ahjo",
+        "kallio"
+      ],
+      "common": 8,
+      "uncommon": 0,
+      "rare": 0,
+      "mythic": 0,
+      "basics": 12
+    }
+  },
+  {
+    "id": "paimen-liina",
+    "nameKey": "opp.paimen-liina",
+    "styleKey": "opp.paimen-liina.style",
+    "portrait": "ui/opp-paimen-liina.webp",
+    "tier": 2,
+    "style": "tempo",
+    "aiParams": {
+      "searchDepth": 1,
+      "searchWidth": 10,
+      "blunderRate": 0.25,
+      "rollout": false
+    },
+    "deckRecipe": {
+      "elements": [
+        "usva",
+        "ahjo"
+      ],
+      "common": 7,
+      "uncommon": 3,
+      "rare": 0,
+      "mythic": 0,
+      "basics": 10
+    }
+  },
+  {
+    "id": "vartija-torvi",
+    "nameKey": "opp.vartija-torvi",
+    "styleKey": "opp.vartija-torvi.style",
+    "portrait": "ui/opp-vartija-torvi.webp",
+    "tier": 3,
+    "style": "control",
+    "aiParams": {
+      "searchDepth": 1,
+      "searchWidth": 12,
+      "blunderRate": 0.2,
+      "rollout": true
+    },
+    "deckRecipe": {
+      "elements": [
+        "kallio",
+        "usva"
+      ],
+      "common": 6,
+      "uncommon": 4,
+      "rare": 1,
+      "mythic": 0,
+      "basics": 10
+    }
+  },
+  {
+    "id": "tanssija-kaarna",
+    "nameKey": "opp.tanssija-kaarna",
+    "styleKey": "opp.tanssija-kaarna.style",
+    "portrait": "ui/opp-tanssija-kaarna.webp",
+    "tier": 4,
+    "style": "aggro",
+    "aiParams": {
+      "searchDepth": 2,
+      "searchWidth": 8,
+      "blunderRate": 0.18,
+      "rollout": true
+    },
+    "deckRecipe": {
+      "elements": [
+        "ahjo"
+      ],
+      "common": 6,
+      "uncommon": 4,
+      "rare": 1,
+      "mythic": 0,
+      "basics": 10
+    }
+  },
+  {
+    "id": "aiti-vilja",
+    "nameKey": "opp.aiti-vilja",
+    "styleKey": "opp.aiti-vilja.style",
+    "portrait": "ui/opp-aiti-vilja.webp",
+    "tier": 5,
+    "style": "swarm",
+    "aiParams": {
+      "searchDepth": 2,
+      "searchWidth": 10,
+      "blunderRate": 0.14,
+      "rollout": true
+    },
+    "deckRecipe": {
+      "elements": [
+        "kallio",
+        "ahjo"
+      ],
+      "common": 6,
+      "uncommon": 4,
+      "rare": 2,
+      "mythic": 0,
+      "basics": 11
+    }
+  },
+  {
+    "id": "kuiskaaja-oona",
+    "nameKey": "opp.kuiskaaja-oona",
+    "styleKey": "opp.kuiskaaja-oona.style",
+    "portrait": "ui/opp-kuiskaaja-oona.webp",
+    "tier": 6,
+    "style": "tempo",
+    "aiParams": {
+      "searchDepth": 2,
+      "searchWidth": 12,
+      "blunderRate": 0.1,
+      "rollout": true
+    },
+    "deckRecipe": {
+      "elements": [
+        "usva",
+        "kallio"
+      ],
+      "common": 5,
+      "uncommon": 5,
+      "rare": 2,
+      "mythic": 1,
+      "basics": 11
+    }
+  },
+  {
+    "id": "mestari-kuura",
+    "nameKey": "opp.mestari-kuura",
+    "styleKey": "opp.mestari-kuura.style",
+    "portrait": "ui/opp-mestari-kuura.webp",
+    "tier": 7,
+    "style": "midrange",
+    "aiParams": {
+      "searchDepth": 2,
+      "searchWidth": 16,
+      "blunderRate": 0.05,
+      "rollout": true
+    },
+    "deckRecipe": {
+      "elements": [
+        "ahjo",
+        "usva"
+      ],
+      "common": 5,
+      "uncommon": 5,
+      "rare": 2,
+      "mythic": 2,
+      "basics": 12
+    }
   }
 ]

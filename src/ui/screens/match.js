@@ -7,7 +7,7 @@ import {
   playerRef, isGameOver,
 } from '../../engine/index.js';
 import { chooseAction } from '../../ai/index.js';
-import { opponentAt, updateMatch, finishMatch } from '../../run/index.js';
+import { opponentAt, updateMatch, finishMatch, recordEvents } from '../../run/index.js';
 import { renderLanes } from '../components/board.js';
 import { renderHand } from '../components/hand.js';
 import { renderPlayerBar } from '../components/life.js';
@@ -45,7 +45,7 @@ export function renderMatch(root, app) {
     ui.mode = 'busy';
     const { state, events } = applyAction(s, action);
     s = state;
-    app.setRun(updateMatch(app.run, s));
+    app.setRun(recordEvents(updateMatch(app.run, s), events));
     draw();
     await anim.play(events, ME);
     reset();
@@ -73,7 +73,7 @@ export function renderMatch(root, app) {
       const a = chooseAction(s, AI, { style: opp.style, ...opp.aiParams }, (app.run.seed ^ (aiStep++ * 2654435761)) >>> 0);
       const { state, events } = applyAction(s, a);
       s = state;
-      app.setRun(updateMatch(app.run, s));
+      app.setRun(recordEvents(updateMatch(app.run, s), events));
       draw();
       await anim.play(events, ME);
     }
@@ -205,9 +205,9 @@ export function renderMatch(root, app) {
         closeOverlay();
         const next = finishMatch(app.run);
         app.setRun(next);
-        if (next.status === 'IN_MATCH') app.go('match');
-        else if (next.status === 'OPENING_BOOSTER') app.openNextBooster();
-        else app.go('menu');
+        if (next.status === 'IN_MATCH') app.go('intro');
+        else if (next.status === 'OPENING_BOOSTER') app.go('result');
+        else app.finishRun();
       } }, t('match.next')),
     ], { dismissable: false });
   }

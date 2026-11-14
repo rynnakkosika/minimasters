@@ -7,8 +7,22 @@ import { renderMenu } from './ui/screens/menu.js';
 import { renderBooster } from './ui/screens/booster.js';
 import { renderDeckbuild } from './ui/screens/deckbuild.js';
 import { renderMatch } from './ui/screens/match.js';
+import { renderOpponentIntro } from './ui/screens/opponent-intro.js';
+import { renderResult } from './ui/screens/result.js';
+import { renderRunSummary } from './ui/screens/run-summary.js';
 
 const SETTINGS_KEY = 'mm.settings.v1';
+// Records live here until the versioned profile save (US4/US5) takes them over.
+const RECORDS_KEY = 'mm.records.v1';
+const EMPTY_RECORDS = { bestRunWins: 0, runsCompleted: 0, runsWon: 0, matchesPlayed: 0 };
+
+function loadRecords() {
+  try {
+    return { ...EMPTY_RECORDS, ...JSON.parse(localStorage.getItem(RECORDS_KEY) || '{}') };
+  } catch {
+    return { ...EMPTY_RECORDS };
+  }
+}
 
 function loadSettings() {
   try {
@@ -24,13 +38,23 @@ function randomSeed() {
   return a[0];
 }
 
-const SCREENS = { menu: renderMenu, booster: renderBooster, deck: renderDeckbuild, match: renderMatch };
+const SCREENS = {
+  menu: renderMenu,
+  booster: renderBooster,
+  deck: renderDeckbuild,
+  intro: renderOpponentIntro,
+  match: renderMatch,
+  result: renderResult,
+  summary: renderRunSummary,
+};
 const root = document.getElementById('app');
 
 const app = {
   run: null,
   screen: 'menu',
   settings: loadSettings(),
+  records: loadRecords(),
+  lastRunWasRecord: false,
 
   saveSettings() {
     try {
@@ -42,6 +66,23 @@ const app = {
 
   setRun(run) {
     app.run = run;
+  },
+
+  /** Called once when a run ends: updates the records and shows the summary. */
+  finishRun() {
+    const r = app.records;
+    const run = app.run;
+    app.lastRunWasRecord = run.wins > r.bestRunWins;
+    r.bestRunWins = Math.max(r.bestRunWins, run.wins);
+    r.runsCompleted++;
+    if (run.status === 'COMPLETED_VICTORY') r.runsWon++;
+    r.matchesPlayed += run.stats?.matches || 0;
+    try {
+      localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
+    } catch {
+      /* storage unavailable */
+    }
+    app.go('summary');
   },
 
   go(screen) {
@@ -67,6 +108,7 @@ const app = {
     if (st === 'OPENING_BOOSTER') app.openNextBooster();
     else if (st === 'DECKBUILDING') app.go('deck');
     else if (st === 'IN_MATCH') app.go('match');
+    else if (st?.startsWith('COMPLETED')) app.go('summary');
     else app.go('menu');
   },
 };

@@ -2,7 +2,7 @@
 import { h, mount } from '../dom.js';
 import { t, cardName } from '../../data/i18n.js';
 import { card } from '../../engine/db.js';
-import { validateDeck, autoBuild, deckSize, setDeck, startMatch, ELEMENTS, MAX_DECK } from '../../run/index.js';
+import { validateDeck, autoBuild, deckSize, setDeck, ELEMENTS, MAX_DECK } from '../../run/index.js';
 import { elementGlyph } from '../components/card.js';
 import { renderCurve } from '../components/energy-curve.js';
 import { showCardDetail } from '../components/tooltip.js';
@@ -68,7 +68,7 @@ export function renderDeckbuild(root, app) {
           check.ok ? null : h('p', { class: 'error' }, check.errors.map((e) => t(e.key, { ...e.params, card: e.params.card ? cardName(e.params.card) : '' })).join(' ')),
           h('div', { class: 'row' },
             h('button', { onclick: () => { deck = autoBuild(pool); save(); } }, t('deck.auto')),
-            h('button', { class: 'primary', disabled: !check.ok, onclick: () => { app.setRun(startMatch(app.run)); app.go('match'); } }, t('deck.play'))))));
+            h('button', { class: 'primary', disabled: !check.ok, onclick: () => app.go('intro') }, t('deck.play'))))));
   }
   draw();
 }

@@ -7,4 +7,5 @@ export const SUITES = [
   'ai.test.js',
   'booster.test.js',
   'deckbuilder.test.js',
+  'run.test.js',
 ];
