@@ -166,10 +166,10 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 **Independent Test**: Pelaa run → avatut kortit näkyvät kokoelmassa ja ennätykset päivittyvät.
 
-- [ ] T055 [US5] Päivitä profiilia `src/run/run.js`:ssä ja `src/storage/save.js`:ssä: booster lisää kortit `profile.collectionSeen`-listaan, ja runin päättyminen päivittää `records`-tiedot (`bestRunWins`, `runsCompleted`, `runsWon`, `matchesPlayed`) (FR-023)
-- [ ] T056 [P] [US5] Toteuta `src/ui/screens/collection.js`: koko sarja, nähdyt avattuina ja näkemättömät siluetteina, suodatus elementin mukaan ja napautus avaa ison kortin
-- [ ] T057 [P] [US5] Toteuta `src/ui/screens/records.js`: ennätysluvut profiilista
-- [ ] T058 [P] [US5] Toteuta `src/ui/screens/settings.js`: kieli, animaationopeus, äänet ja vihjeet (tallentuvat `profile.settings`-asetuksiin)
+- [X] T055 [US5] Päivitä profiilia `src/run/run.js`:ssä ja `src/storage/save.js`:ssä: booster lisää kortit `profile.collectionSeen`-listaan, ja runin päättyminen päivittää `records`-tiedot (`bestRunWins`, `runsCompleted`, `runsWon`, `matchesPlayed`) (FR-023)
+- [X] T056 [P] [US5] Toteuta `src/ui/screens/collection.js`: koko sarja, nähdyt avattuina ja näkemättömät siluetteina, suodatus elementin mukaan ja napautus avaa ison kortin
+- [X] T057 [P] [US5] Toteuta `src/ui/screens/records.js`: ennätysluvut profiilista
+- [X] T058 [P] [US5] Toteuta `src/ui/screens/settings.js`: kieli, animaationopeus, äänet ja vihjeet (tallentuvat `profile.settings`-asetuksiin)
 
 **Checkpoint**: Kaikki päävalikon kohdat toimivat → commit
 

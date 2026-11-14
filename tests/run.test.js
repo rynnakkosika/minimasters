@@ -1,6 +1,6 @@
 import { test, assert, assertEqual } from './runner.js';
 import './helpers.js';
-import { newRun, openBooster, setDeck, startMatch, finishMatch, recordEvents, bestCard, autoBuild, OPPONENTS, opponentAt, opponentDeck, RUN_LENGTH } from '../src/run/index.js';
+import { newRun, openBooster, setDeck, startMatch, finishMatch, recordEvents, bestCard, markSeen, autoBuild, OPPONENTS, opponentAt, opponentDeck, RUN_LENGTH } from '../src/run/index.js';
 import { card } from '../src/engine/db.js';
 
 /** Plays the run up to a match and forces the result. */
@@ -92,4 +92,10 @@ test('run: stats pick the card that dealt the most damage', () => {
   ]);
   assertEqual(run.stats.played, { 'ahjo-kekale': 2 });
   assertEqual(bestCard(run), 'ahjo-hehkulisko');
+});
+
+test('run: opened cards are added to the collection once (FR-023)', () => {
+  const seen = markSeen(['a', 'b'], ['b', 'c', 'c', 'd']);
+  assertEqual(seen, ['a', 'b', 'c', 'd']);
+  assertEqual(markSeen([], []), []);
 });

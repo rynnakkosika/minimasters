@@ -1,7 +1,7 @@
 // Entry point: loads data and saves, picks the language and routes between screens.
 import { loadCards } from './data/cards.js';
 import { setLocale, t } from './data/i18n.js';
-import { newRun, openBooster } from './run/index.js';
+import { newRun, openBooster, markSeen } from './run/index.js';
 import { createStore } from './storage/save.js';
 import { h } from './ui/dom.js';
 import { closeOverlay } from './ui/components/tooltip.js';
@@ -14,6 +14,9 @@ import { renderResult } from './ui/screens/result.js';
 import { renderRunSummary } from './ui/screens/run-summary.js';
 import { renderTutorial } from './ui/screens/tutorial.js';
 import { renderRules } from './ui/screens/rules.js';
+import { renderCollection } from './ui/screens/collection.js';
+import { renderRecords } from './ui/screens/records.js';
+import { renderSettings } from './ui/screens/settings.js';
 
 function randomSeed() {
   const a = new Uint32Array(1);
@@ -31,6 +34,9 @@ const SCREENS = {
   summary: renderRunSummary,
   tutorial: renderTutorial,
   rules: renderRules,
+  collection: renderCollection,
+  records: renderRecords,
+  settings: renderSettings,
 };
 const root = document.getElementById('app');
 const store = createStore();
@@ -107,7 +113,10 @@ const app = {
   },
 
   openNextBooster() {
-    app.setRun(openBooster(app.run).run);
+    const { run, booster } = openBooster(app.run);
+    app.setRun(run);
+    profile.collectionSeen = markSeen(profile.collectionSeen, booster.cards);
+    app.saveSettings();
     app.go('booster');
   },
 

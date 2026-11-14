@@ -44,6 +44,13 @@ export function recordEvents(run, events) {
   return r;
 }
 
+/** Collection after opening cards: adds ids not seen before, keeps the order of first sight (FR-023). */
+export function markSeen(seen, cardIds) {
+  const out = seen.slice();
+  for (const id of cardIds) if (!out.includes(id)) out.push(id);
+  return out;
+}
+
 /** The run's best card: most damage dealt, then most played. */
 export function bestCard(run) {
   const s = run.stats || { played: {}, damage: {} };

@@ -33,6 +33,10 @@ export function renderMenu(root, app) {
         inProgress ? h('button', { class: 'primary', onclick: () => app.resume() }, t('menu.continue')) : null,
         h('button', { class: inProgress ? '' : 'primary', onclick: startNew }, t('menu.newRun')),
         h('button', { onclick: () => app.go('tutorial') }, t('menu.tutorial')),
-        h('button', { onclick: () => app.go('rules') }, t('menu.rules')))));
+        h('button', { onclick: () => app.go('rules') }, t('menu.rules')),
+        h('div', { class: 'menu-row' },
+          h('button', { onclick: () => app.go('collection') }, t('menu.collection')),
+          h('button', { onclick: () => app.go('records') }, t('menu.records')),
+          h('button', { onclick: () => app.go('settings') }, t('menu.settings'))))));
   if (!app.profile.tutorialDone && !inProgress) offerTutorial(app);
 }

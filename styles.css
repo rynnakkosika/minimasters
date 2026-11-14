@@ -344,3 +344,18 @@ h1.loss { color: var(--danger); font-size: 30px; }
 .kw-list { display: grid; grid-template-columns: max-content 1fr; gap: 4px 10px; margin: 0; }
 .kw-list dt { font-weight: 700; }
 .kw-list dd { margin: 0; color: var(--muted); }
+
+/* ---- collection, records, settings ---- */
+.menu-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.menu-row button { padding: 8px 4px; font-size: 13px; }
+.filters { display: flex; gap: 6px; overflow-x: auto; }
+.filter { flex: 0 0 auto; border: 1px solid transparent; }
+.filter.active { border-color: var(--el, var(--accent)); background: var(--el-2, var(--panel-2)); font-weight: 700; }
+.silhouette { border-style: dashed; background: var(--bg-2); display: grid; place-items: center; filter: grayscale(.6); opacity: .6; }
+.silhouette-mark { font-size: 34px; color: var(--muted); }
+.stats-2 { grid-template-columns: repeat(2, 1fr); }
+.setting { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.setting-label { font-weight: 600; }
+.segmented { display: flex; gap: 4px; background: var(--bg-2); padding: 4px; border-radius: var(--radius); }
+.segmented button { flex: 1; background: transparent; padding: 6px; }
+.segmented button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
