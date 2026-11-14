@@ -135,11 +135,11 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 **Independent Test**: Ensimmäinen käynnistys tarjoaa opetuksen. Sen läpäissyt testaaja pelaa normaalin ottelun ilman apua (quickstart-skenaario 8, SC-003).
 
-- [ ] T046 [P] [US3] Luo `src/ui/tutorial/script.js`: kiinteä opetusottelu (kiinteät pakat ja siemen) ja askeleet, joista jokainen esittelee yhden säännön yhdellä lyhyellä ruudulla. Järjestys: kortin nosto, resurssi ja energia, olennon pelaaminen kaistaan, hyökkäys tyhjään kaistaan, automaattinen puolustus, loitsu ja kohde, avainsana, voitto.
-- [ ] T047 [US3] Toteuta `src/ui/screens/tutorial.js`: ajaa skriptin match-näkymän päällä, sallii vain skriptin odottaman siirron, korostaa kohteen ja näyttää selitysruudun. Opetuksen voi ohittaa ja käynnistää uudelleen päävalikosta (FR-019).
-- [ ] T048 [P] [US3] Toteuta `src/ui/screens/rules.js`: pelin sisäinen sääntösivu (vuoron vaiheet, kaistat, energia, avainsanat `keywords.json`:sta), auki päävalikosta ja taukovalikosta (FR-012)
-- [ ] T049 [US3] Lisää vihjeet `src/ui/screens/match.js`:iin: sallittujen hyökkääjien korostus, "Ei pelattavia kortteja – lopeta vuoro" -vihje ja asetus `settings.hints` vihjeiden poistamiseen (US3 skenaario 4)
-- [ ] T050 [US3] Näytä opetustarjous ensimmäisellä käynnistyksellä `src/ui/screens/menu.js`:ssä, jos `profile.tutorialDone` on false
+- [X] T046 [P] [US3] Luo `src/ui/tutorial/script.js`: kiinteä opetusottelu (kiinteät pakat ja siemen) ja askeleet, joista jokainen esittelee yhden säännön yhdellä lyhyellä ruudulla. Järjestys: kortin nosto, resurssi ja energia, olennon pelaaminen kaistaan, hyökkäys tyhjään kaistaan, automaattinen puolustus, loitsu ja kohde, avainsana, voitto.
+- [X] T047 [US3] Toteuta `src/ui/screens/tutorial.js`: ajaa skriptin match-näkymän päällä, sallii vain skriptin odottaman siirron, korostaa kohteen ja näyttää selitysruudun. Opetuksen voi ohittaa ja käynnistää uudelleen päävalikosta (FR-019).
+- [X] T048 [P] [US3] Toteuta `src/ui/screens/rules.js`: pelin sisäinen sääntösivu (vuoron vaiheet, kaistat, energia, avainsanat `keywords.json`:sta), auki päävalikosta ja taukovalikosta (FR-012)
+- [X] T049 [US3] Lisää vihjeet `src/ui/screens/match.js`:iin: sallittujen hyökkääjien korostus, "Ei pelattavia kortteja – lopeta vuoro" -vihje ja asetus `settings.hints` vihjeiden poistamiseen (US3 skenaario 4)
+- [X] T050 [US3] Näytä opetustarjous ensimmäisellä käynnistyksellä `src/ui/screens/menu.js`:ssä, jos `profile.tutorialDone` on false
 
 **Checkpoint**: Opetus pelattavissa alusta loppuun → commit
 

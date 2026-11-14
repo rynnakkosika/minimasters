@@ -325,3 +325,22 @@ h1.loss { color: var(--danger); font-size: 30px; }
   width: min(420px, calc(100vw - 32px)); padding: 10px 14px; border-radius: var(--radius);
   background: #14121bf0; border: 1px solid var(--line); box-shadow: 0 8px 24px #000a; font-size: 14px;
 }
+
+/* ---- tutorial coach, hints ---- */
+.coach {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: var(--radius);
+  background: #1f3a44; border: 1px solid var(--target); font-size: 14px; line-height: 1.35;
+}
+.coach-text { margin: 0; flex: 1; }
+.coach button { flex: 0 0 auto; }
+.coach-target { outline: 3px solid var(--target); outline-offset: 2px; animation: pulse .8s infinite alternate; border-radius: var(--radius); }
+.lane.ready .card-board { box-shadow: 0 0 0 2px var(--ahjo), 0 0 10px #e0663a66; }
+
+/* ---- rules ---- */
+.rules-section h3 { color: var(--accent); }
+.rules-section p { margin: 0 0 6px; line-height: 1.45; }
+.rules-scroll { text-align: left; }
+.kw-list { display: grid; grid-template-columns: max-content 1fr; gap: 4px 10px; margin: 0; }
+.kw-list dt { font-weight: 700; }
+.kw-list dd { margin: 0; color: var(--muted); }

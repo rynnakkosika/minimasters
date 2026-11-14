@@ -4,7 +4,7 @@ import { t } from '../../data/i18n.js';
 import { renderCard } from './card.js';
 
 /**
- * opts.laneState(lane) → { selectable, targetable, attacking } ; opts.onLane(lane) ; opts.onUnit(unit, lane)
+ * opts.laneState(lane) → { selectable, targetable, attacking, ready } ; opts.onLane(lane) ; opts.onUnit(unit, lane)
  */
 export function renderLanes(s, p, opts = {}) {
   const lanes = s.players[p].lanes;
@@ -14,6 +14,7 @@ export function renderLanes(s, p, opts = {}) {
       const cls = ['lane'];
       if (st.selectable) cls.push('selectable');
       if (st.attacking) cls.push('attack-selected');
+      if (st.ready) cls.push('ready');
       return h('div', {
         class: cls.join(' '),
         dataset: { lane, laneOwner: p },

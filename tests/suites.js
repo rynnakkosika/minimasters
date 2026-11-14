@@ -9,4 +9,5 @@ export const SUITES = [
   'deckbuilder.test.js',
   'run.test.js',
   'save.test.js',
+  'tutorial.test.js',
 ];

@@ -12,6 +12,8 @@ import { renderMatch } from './ui/screens/match.js';
 import { renderOpponentIntro } from './ui/screens/opponent-intro.js';
 import { renderResult } from './ui/screens/result.js';
 import { renderRunSummary } from './ui/screens/run-summary.js';
+import { renderTutorial } from './ui/screens/tutorial.js';
+import { renderRules } from './ui/screens/rules.js';
 
 function randomSeed() {
   const a = new Uint32Array(1);
@@ -27,6 +29,8 @@ const SCREENS = {
   match: renderMatch,
   result: renderResult,
   summary: renderRunSummary,
+  tutorial: renderTutorial,
+  rules: renderRules,
 };
 const root = document.getElementById('app');
 const store = createStore();
@@ -55,6 +59,7 @@ const app = {
   settings: profile.settings,
   records: profile.records,
   lastRunWasRecord: false,
+  toast,
 
   saveSettings() {
     store.saveProfile(profile);
@@ -117,8 +122,8 @@ const app = {
 
 // Android back button / browser back: never leave a match by accident, otherwise go to the menu.
 window.addEventListener('popstate', () => {
-  if (app.screen === 'match') {
-    history.pushState({ screen: 'match' }, '');
+  if (app.screen === 'match' || app.screen === 'tutorial') {
+    history.pushState({ screen: app.screen }, '');
     document.querySelector('.match-top .icon-btn')?.click();
   } else if (app.screen !== 'menu') {
     app.go('menu');
