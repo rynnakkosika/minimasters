@@ -131,8 +131,14 @@ async function host(root, app) {
   }
 }
 
+// Inside the Android app the page address is the app's own localhost, so invites point to the
+// published web version instead (README → Pelaa). A friend with the app can type the code.
+const WEB_URL = 'https://rynnakkosika.github.io/minimasters/';
+const inApp = () => !!window.Capacitor?.isNativePlatform?.();
+
 function showCode(root, app, code) {
-  const link = inviteLink(location.href, code);
+  const link = inviteLink(inApp() ? WEB_URL : location.href, code);
+  const localOnly = !inApp() && (/^(localhost|127\.|\[::1\])/.test(location.hostname) || location.protocol === 'file:');
   const share = async () => {
     const text = t('friend.shareText', { code });
     try {
@@ -157,7 +163,7 @@ function showCode(root, app, code) {
     h('div', { class: 'menu-buttons' },
       h('button', { class: 'primary', onclick: share }, t('friend.share')),
       h('p', { class: 'waiting' }, t('friend.waiting')),
-      /^(localhost|127\.|\[::1\])/.test(location.hostname) || location.protocol === 'file:' ? h('p', { class: 'fine' }, t('friend.localNote')) : null,
+      localOnly ? h('p', { class: 'fine' }, t('friend.localNote')) : null,
       cancelButton(app)));
 }
 

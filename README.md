@@ -10,6 +10,18 @@ Pelin nimi, maailma, kortit, taide ja säännöt ovat alkuperäisiä. Peli ei k�
 
 Sivu päivittyy automaattisesti, kun `main`-haaraan pushataan.
 
+## Pelaa kaverin kanssa
+
+Valitse **Pelaa kaverin kanssa → Luo peli**. Saat 6-merkkisen pelikoodin ja kutsulinkin (`?peli=KOODI`). Kaveri avaa linkin tai valitsee **Liity** ja kirjoittaa koodin, ja ottelu alkaa kummallakin. Kumpikin saa uuden boosterin, josta pakka kootaan automaattisesti; boosterit ja sekoitukset lasketaan yhteisestä ottelun siemenestä.
+
+- Isännän laite on erotuomari: kaverin siirto hyväksytään vain, jos se kuuluu sillä hetkellä sallittuihin siirtoihin. Laitteet lähettävät toisilleen vain siirtoja, eivät pelitilaa.
+- Jos kaveri katoaa, isännälle näytetään ilmoitus ja tekoäly pelaa ottelun loppuun kaverin puolesta. Jos isäntä katoaa, kaveri palaa valikkoon.
+- Yhteys on vertaisyhteys (WebRTC). Ilmainen julkinen PeerJS-palvelin vain esittelee laitteet toisilleen, ja PeerJS-kirjasto ladataan vasta kun peli luodaan tai siihen liitytään. Yksinpeli ei käytä verkkoa.
+- Kaveriottelu ei vaikuta runiin, ennätyksiin eikä tallennuksiin.
+- Kaverin on päästävä peliin verkosta, joten pelin verkkoversion pitää olla julkaistu. Linkki `localhost`-osoitteeseen toimii vain omalla koneella (kahdella välilehdellä voi testata).
+
+Speksi: [specs/002-friend-play](specs/002-friend-play/). Koodi: `src/net/protocol.js` (puhdas protokolla ja erotuomari), `src/net/peer.js` (PeerJS-yhteys), `src/ui/screens/friend.js` (näkymä ja verkkosessiot).
+
 ## Säännöt lyhyesti
 
 - Kummallakin on 20 elämää. Elämät nollaan pudottanut häviää.
@@ -41,4 +53,4 @@ node tools/validate-cards.mjs
 
 ## Suunnitteludokumentit
 
-Speksi, suunnitelma ja tehtävälista: [specs/001-booster-run-cardgame](specs/001-booster-run-cardgame/).
+Speksi, suunnitelma ja tehtävälista: [specs/001-booster-run-cardgame](specs/001-booster-run-cardgame/) (yksinpeli) ja [specs/002-friend-play](specs/002-friend-play/) (kaveripeli).

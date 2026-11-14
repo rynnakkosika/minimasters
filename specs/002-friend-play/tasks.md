@@ -47,11 +47,11 @@ description: "Task list for 002-friend-play (Pelaa kaverin kanssa)"
 
 ## Phase 4: User Story 5 + Polish
 
-- [ ] T013 [US5] Varmista, ettei kaveriottelu kutsu `app.setRun`/`saveSettings`-tallennusta eikä yksinpeli tuo `src/net/peer.js`:ää (PeerJS vain dynaamisesti)
-- [ ] T014 [P] Päivitä `privacy.html` (PeerJS-välityspalvelin, IP-osoitteet, ei tallennusta) (FR-019)
-- [ ] T015 [P] Päivitä `README.md` (Pelaa kaverin kanssa, julkaisuvaatimus, rakenne)
-- [ ] T016 Aja `node tools/update-sw.mjs`, `node tests/run-node.mjs` ja `npm run sync` (mobile/)
-- [ ] T017 Kahden välilehden selaintesti quickstart.md:n mukaan: täysi ottelu kahden välilehden välillä
+- [X] T013 [US5] Varmista, ettei kaveriottelu kutsu `app.setRun`/`saveSettings`-tallennusta eikä yksinpeli tuo `src/net/peer.js`:ää (PeerJS vain dynaamisesti)
+- [X] T014 [P] Päivitä `privacy.html` (PeerJS-välityspalvelin, IP-osoitteet, ei tallennusta) (FR-019)
+- [X] T015 [P] Päivitä `README.md` (Pelaa kaverin kanssa, julkaisuvaatimus, rakenne)
+- [X] T016 Aja `node tools/update-sw.mjs`, `node tests/run-node.mjs` ja `npm run sync` (mobile/)
+- [X] T017 Kahden välilehden selaintesti quickstart.md:n mukaan: täysi ottelu kahden välilehden välillä
 
 **Checkpoint**: commit.
 

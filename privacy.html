@@ -18,21 +18,35 @@
 <main>
   <h1>Tietosuoja</h1>
   <p class="muted">Koskee Minimasters-sovellusta ja sen verkkoversiota. Päivitetty 14.11.2026.</p>
-  <p>Minimasters on yksinpeli, jota pelataan omalla laitteella. Siinä ei ole käyttäjätilejä, mainoksia, analytiikkaa eikä seurantaa, eikä se kerää tai myy henkilötietoja.</p>
+  <p>Minimastersia pelataan omalla laitteella tekoälyä vastaan tai halutessasi kaveria vastaan tämän omalla laitteella. Siinä ei ole käyttäjätilejä, mainoksia, analytiikkaa eikä seurantaa, eikä se kerää tai myy henkilötietoja.</p>
   <h2>Mitä laitteelle tallennetaan</h2>
   <p>Peli tallentaa keskeneräisen runin, ennätykset, löytämäsi kortit ja asetukset laitteen paikalliseen tallennustilaan, jotta voit jatkaa myöhemmin. Tiedot eivät koskaan lähde laitteelta. Sovelluksen poistaminen tai selaimen sivustotietojen tyhjentäminen poistaa ne.</p>
   <h2>Verkkoyhteys</h2>
-  <p>Peli toimii kokonaan ilman verkkoyhteyttä eikä lähetä mitään mihinkään.</p>
+  <p>Yksinpeli toimii kokonaan ilman verkkoyhteyttä eikä lähetä mitään mihinkään.</p>
+  <h2>Pelaa kaverin kanssa</h2>
+  <p>Vain jos valitset <b>Pelaa kaverin kanssa</b> ja luot pelin tai liityt siihen, peli muodostaa verkkoyhteyden:</p>
+  <ul>
+    <li>Peli lataa avoimen lähdekoodin PeerJS-kirjaston (unpkg.com) ja käyttää ilmaista julkista PeerJS-palvelinta (0.peerjs.com) vain esittelemään kaksi laitetta toisilleen. Palvelin näkee laitteesi IP-osoitteen ja satunnaisen 6-merkkisen pelikoodin.</li>
+    <li>Itse ottelu kulkee suoraan laitteiden välillä (WebRTC). Kumpikin laite näkee tällöin toisen laitteen IP-osoitteen, kuten verkkoyhteyksissä yleensä.</li>
+    <li>Yhteyden yli lähetetään vain pelikoodi, ottelun satunnaissiemen ja pelisiirrot. Nimiä, tilejä tai muita henkilötietoja ei lähetetä, eikä otteluita tallenneta mihinkään.</li>
+  </ul>
   <h2>Lapset</h2>
   <p>Peli ei kerää henkilötietoja keneltäkään, ei myöskään lapsilta.</p>
 
   <h1 lang="en">Privacy</h1>
   <p class="muted" lang="en">Applies to the Minimasters app and its web version. Last updated 14 November 2026.</p>
-  <p lang="en">Minimasters is a single-player game you play on your own device. It has no accounts, no ads, no analytics and no tracking, and it doesn't collect or sell personal information.</p>
+  <p lang="en">You play Minimasters on your own device against the AI or, if you choose, against a friend on their own device. It has no accounts, no ads, no analytics and no tracking, and it doesn't collect or sell personal information.</p>
   <h2 lang="en">What stays on your device</h2>
   <p lang="en">The game saves your unfinished run, records, the cards you have found and your settings in the device's local storage so you can continue later. This data never leaves your device. Uninstalling the app or clearing the browser's site data deletes it.</p>
   <h2 lang="en">Network</h2>
-  <p lang="en">The game works fully offline and sends nothing anywhere.</p>
+  <p lang="en">Single-player works fully offline and sends nothing anywhere.</p>
+  <h2 lang="en">Play with a friend</h2>
+  <p lang="en">Only if you choose <b>Play with a friend</b> and create or join a game does the game go online:</p>
+  <ul lang="en">
+    <li>It loads the open-source PeerJS library (unpkg.com) and uses the free public PeerJS server (0.peerjs.com) only to introduce the two devices to each other. That server sees your device's IP address and a random 6-character game code.</li>
+    <li>The match itself runs directly between the two devices (WebRTC), so each device sees the other's IP address, as with any direct connection.</li>
+    <li>Only the game code, the match's random seed and the game moves are sent. No names, accounts or other personal data are sent, and matches are not stored anywhere.</li>
+  </ul>
   <h2 lang="en">Children</h2>
   <p lang="en">The game doesn't collect personal information from anyone, including children.</p>
 </main>
