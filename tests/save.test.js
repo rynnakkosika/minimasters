@@ -1,13 +1,13 @@
 import { test, assert, assertEqual } from './runner.js';
 import './helpers.js';
 import { createStore, memoryStorage, migrate, RUN_KEY, PROFILE_KEY, defaultProfile } from '../src/storage/save.js';
-import { newRun, openBooster, setDeck, autoBuild, startMatch, updateMatch } from '../src/run/index.js';
+import { newRun, openBooster, startMatch, updateMatch } from '../src/run/index.js';
 import { applyAction } from '../src/engine/index.js';
 import { chooseAction } from '../src/ai/index.js';
 
 function midMatchRun(seed = 21, steps = 25) {
   let run = openBooster(newRun(seed)).run;
-  run = startMatch(setDeck(run, autoBuild(run.pool)));
+  run = startMatch(run);
   let s = run.match;
   for (let i = 0; i < steps && s.phase !== 'GAME_OVER'; i++) s = applyAction(s, nextAction(s, i)).state;
   return updateMatch(run, s);
@@ -103,4 +103,14 @@ test('save: no personal data in the saves', () => {
   store.saveProfile(defaultProfile());
   const text = (storage.getItem(RUN_KEY) + storage.getItem(PROFILE_KEY)).toLowerCase();
   for (const word of ['email', 'name"', 'device', 'userid', 'ip']) assert(!text.includes(`"${word}`), word);
+});
+
+test('save: a v1 run waiting in the old deck builder loads as READY with the automatic deck', () => {
+  const storage = memoryStorage();
+  const run = openBooster(newRun(8)).run;
+  const old = { ...run, status: 'DECKBUILDING', deck: { cards: run.pool.slice(0, 3), basics: { ahjo: 17, kallio: 0, usva: 0 } } };
+  storage.setItem(RUN_KEY, JSON.stringify({ version: 1, run: old }));
+  const loaded = createStore(storage).loadRun();
+  assertEqual(loaded.status, 'READY');
+  assertEqual(loaded.deck.cards.length, 10);
 });

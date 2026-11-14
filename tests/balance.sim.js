@@ -5,7 +5,7 @@ import './helpers.js';
 import { applyAction } from '../src/engine/index.js';
 import { chooseAction } from '../src/ai/index.js';
 import { card } from '../src/engine/db.js';
-import { newRun, openBooster, setDeck, autoBuild, startMatch, finishMatch, opponentAt, OPPONENTS } from '../src/run/index.js';
+import { newRun, openBooster, startMatch, finishMatch, opponentAt, OPPONENTS } from '../src/run/index.js';
 
 // Rough real-time cost of a turn with animations: the human thinks, the AI plays quickly.
 const SECONDS_PER_PLAYER_TURN = 22;
@@ -38,9 +38,7 @@ export function simulateRun(seed, playerParams) {
   const matches = [];
   while (!run.status.startsWith('COMPLETED')) {
     if (run.status === 'OPENING_BOOSTER') {
-      run = openBooster(run).run;
-      run = setDeck(run, autoBuild(run.pool));
-      run = startMatch(run);
+      run = startMatch(openBooster(run).run);
     }
     const s = playMatch(run, playerParams, seed * 31 + matches.length);
     run = structuredClone(run);

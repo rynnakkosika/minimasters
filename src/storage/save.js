@@ -2,16 +2,29 @@
 //   mm.profile.v1 → Profile (settings, records, collection, tutorial flag)
 //   mm.run.v1     → { version, run } including the live match and its rng state (FR-022)
 
+import { deckFromPool } from '../run/deckbuilder.js';
+
 export const PROFILE_KEY = 'mm.profile.v1';
 export const RUN_KEY = 'mm.run.v1';
 const LEGACY_SETTINGS_KEY = 'mm.settings.v1';
 const LEGACY_RECORDS_KEY = 'mm.records.v1';
 
-export const RUN_VERSION = 1;
+export const RUN_VERSION = 2;
 export const PROFILE_VERSION = 1;
 
 /** migrate[v](data) turns version v into v + 1. Add an entry here whenever a format changes. */
-export const RUN_MIGRATIONS = {};
+export const RUN_MIGRATIONS = {
+  // v2: deck building was removed. A run waiting in the deck builder becomes READY with the
+  // automatic deck (every opened card plus sources). Card data must be loaded before this runs.
+  1: (d) => {
+    const run = { ...d.run };
+    if (run.status === 'DECKBUILDING') {
+      run.status = 'READY';
+      run.deck = deckFromPool(run.pool);
+    }
+    return { ...d, version: 2, run };
+  },
+};
 export const PROFILE_MIGRATIONS = {};
 
 export function defaultProfile() {

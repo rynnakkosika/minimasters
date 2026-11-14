@@ -1,10 +1,11 @@
 // Run state machine (data-model.md → Run):
-// OPENING_BOOSTER → DECKBUILDING → IN_MATCH → OPENING_BOOSTER | COMPLETED_VICTORY | COMPLETED_DEFEAT
+// OPENING_BOOSTER → READY → IN_MATCH → OPENING_BOOSTER | COMPLETED_VICTORY | COMPLETED_DEFEAT
+// There is no deck building: the deck is always every opened card plus sources (deckFromPool).
 import { withRng } from '../engine/rng.js';
 import { allCards } from '../engine/db.js';
 import { createMatch } from '../engine/state.js';
 import { openBoosterCards } from './booster.js';
-import { emptyDeck, validateDeck, deckList } from './deckbuilder.js';
+import { emptyDeck, validateDeck, deckList, deckFromPool } from './deckbuilder.js';
 import { opponentAt, opponentDeck } from './ladder.js';
 
 export const RUN_LENGTH = 7;
@@ -74,18 +75,13 @@ export function openBooster(run) {
   const booster = { seed, cards: openBoosterCards(seed, allCards()) };
   r.boosters.push(booster);
   r.pool.push(...booster.cards);
-  r.status = 'DECKBUILDING';
+  r.deck = deckFromPool(r.pool);
+  r.status = 'READY';
   return { run: r, booster };
 }
 
-export function setDeck(run, deck) {
-  const r = clone(run);
-  r.deck = clone(deck);
-  return r;
-}
-
 export function startMatch(run) {
-  if (run.status !== 'DECKBUILDING') throw new Error(`cannot start a match in ${run.status}`);
+  if (run.status !== 'READY') throw new Error(`cannot start a match in ${run.status}`);
   const check = validateDeck(run.pool, run.deck);
   if (!check.ok) throw new Error(`invalid deck: ${check.errors.map((e) => e.key).join(', ')}`);
   const r = clone(run);
@@ -117,7 +113,7 @@ export function finishMatch(run) {
   r.stats ??= { played: {}, damage: {}, matches: 0 };
   r.stats.matches++;
   if (winner === null) {
-    r.status = 'DECKBUILDING';
+    r.status = 'READY';
     r.match = null;
     return startMatch(r);
   }

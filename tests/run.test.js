@@ -1,13 +1,11 @@
 import { test, assert, assertEqual } from './runner.js';
 import './helpers.js';
-import { newRun, openBooster, setDeck, startMatch, finishMatch, recordEvents, bestCard, markSeen, autoBuild, OPPONENTS, opponentAt, opponentDeck, RUN_LENGTH } from '../src/run/index.js';
+import { newRun, openBooster, startMatch, finishMatch, recordEvents, bestCard, markSeen, OPPONENTS, opponentAt, opponentDeck, RUN_LENGTH } from '../src/run/index.js';
 import { card } from '../src/engine/db.js';
 
 /** Plays the run up to a match and forces the result. */
 function toMatch(run) {
-  run = openBooster(run).run;
-  run = setDeck(run, autoBuild(run.pool));
-  return startMatch(run);
+  return startMatch(openBooster(run).run);
 }
 
 function endMatch(run, winner, reason = 'life') {
@@ -24,7 +22,7 @@ test('run: a win opens the next booster, the pool grows by 10', () => {
   assertEqual([run.status, run.wins, run.opponentIndex], ['OPENING_BOOSTER', 1, 1]);
   run = openBooster(run).run;
   assertEqual(run.pool.length, 20);
-  assertEqual(run.status, 'DECKBUILDING');
+  assertEqual(run.status, 'READY');
 });
 
 test('run: seven wins complete the run (FR-005)', () => {

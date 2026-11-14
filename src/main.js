@@ -7,7 +7,6 @@ import { h } from './ui/dom.js';
 import { closeOverlay } from './ui/components/tooltip.js';
 import { renderMenu } from './ui/screens/menu.js';
 import { renderBooster } from './ui/screens/booster.js';
-import { renderDeckbuild } from './ui/screens/deckbuild.js';
 import { renderMatch } from './ui/screens/match.js';
 import { renderOpponentIntro } from './ui/screens/opponent-intro.js';
 import { renderResult } from './ui/screens/result.js';
@@ -27,7 +26,6 @@ function randomSeed() {
 const SCREENS = {
   menu: renderMenu,
   booster: renderBooster,
-  deck: renderDeckbuild,
   intro: renderOpponentIntro,
   match: renderMatch,
   result: renderResult,
@@ -123,7 +121,7 @@ const app = {
   resume() {
     const st = app.run?.status;
     if (st === 'OPENING_BOOSTER') app.go('result');
-    else if (st === 'DECKBUILDING') app.go('deck');
+    else if (st === 'READY') app.go('intro');
     else if (st === 'IN_MATCH') app.go('match');
     else app.go('menu');
   },

@@ -1,7 +1,9 @@
-// Regenerates the offline file list in sw.js from the files the game actually uses:
-// node tools/update-sw.mjs   (tests/sw.test.js fails if the list is out of date)
-import { readdirSync, readFileSync, writeFileSync, statSync, existsSync } from 'node:fs';
-import { join, relative } from 'node:path';
+// Regenerates the offline file list in sw.js from the game files in git (the index, so staged
+// files count): node tools/update-sw.mjs   (tests/sw.test.js fails if the list is out of date)
+// Only files git knows are published, so untracked work in progress never ends up in the list.
+import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(fileURLToPath(import.meta.url), '..', '..');
@@ -9,20 +11,12 @@ const TOP = ['index.html', 'styles.css', 'manifest.webmanifest', 'privacy.html']
 const DIRS = ['src', 'data', 'icons', 'assets'];
 const SKIP = /(^|\/)\.|\.md$/;
 
-function walk(dir) {
-  const out = [];
-  if (!existsSync(dir)) return out;
-  for (const name of readdirSync(dir)) {
-    const full = join(dir, name);
-    if (statSync(full).isDirectory()) out.push(...walk(full));
-    else out.push(full);
-  }
-  return out;
+function tracked() {
+  return execFileSync('git', ['ls-files', '--cached', '-z'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);
 }
 
 export function offlineFiles() {
-  const files = [...TOP];
-  for (const d of DIRS) files.push(...walk(join(root, d)).map((f) => relative(root, f).split('\\').join('/')));
+  const files = tracked().filter((f) => TOP.includes(f) || DIRS.some((d) => f.startsWith(`${d}/`)));
   return ['./', ...files.filter((f) => !SKIP.test(f)).sort()];
 }
 

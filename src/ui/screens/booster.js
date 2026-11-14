@@ -23,7 +23,7 @@ export function renderBooster(root, app) {
               : renderCard(id, { size: 'mini', faceDown: true, onclick: () => { revealed.add(i); draw(); } }))),
         h('footer', { class: 'action-bar' },
           all ? null : h('button', { onclick: () => { booster.cards.forEach((_, i) => revealed.add(i)); draw(); } }, t('booster.revealAll')),
-          h('button', { class: 'primary', disabled: !all, onclick: () => app.go('deck') }, t('booster.toDeck')))));
+          h('button', { class: 'primary', disabled: !all, onclick: () => app.go('intro') }, t('booster.next')))));
   }
   draw();
 }
