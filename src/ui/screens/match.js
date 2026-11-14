@@ -1,9 +1,16 @@
-// Match screen: the human is always player 0, the AI player 1.
-// The view is driven by a "session" so the same screen serves both run matches and the tutorial:
+// Match screen. The local human is session.me (player 0 unless set), always drawn at the bottom.
+// The view is driven by a "session" so the same screen serves run matches, the tutorial and
+// friend play (specs/002-friend-play/contracts/net-protocol.md):
 //   session = {
 //     state, opponent: { name, style, aiParams },
-//     save(state, events)            persist after every action
-//     aiAction(state, step)          the opponent's next action
+//     me?                            local player index (default 0)
+//     save(state, events, action)    persist (or broadcast) after every action
+//     aiAction?(state, step)         the opponent's next action; absent while the opponent is a human
+//     propose?(action)               friend guest: send own actions to the host instead of applying them
+//     attach?(api)                   network sessions: api.receive(action) → Promise<boolean>,
+//                                    api.rebuild(state), api.resume(), api.state(), api.refused()
+//     waitingText?                   prompt while a proposal is on its way
+//     drawText?                      result title for a draw
 //     allow?(action, state)          tutorial: only the scripted move is accepted
 //     coach?(state)                  tutorial: { text, highlight?, continueLabel? } or null
 //     onAction?(action, before, after) tutorial: advance the script
@@ -16,7 +23,7 @@ import { t, cardName } from '../../data/i18n.js';
 import { card } from '../../engine/db.js';
 import {
   applyAction, attackableLanes, playBlocker, chosenTargetOf, targetCandidates,
-  playerRef, isGameOver,
+  playerRef, isGameOver, IllegalActionError,
 } from '../../engine/index.js';
 import { chooseAction } from '../../ai/index.js';
 import { opponentAt, updateMatch, finishMatch, recordEvents } from '../../run/index.js';
@@ -28,8 +35,7 @@ import { showCardDetail, showOverlay, closeOverlay, confirmDialog } from '../com
 import { createAnimator, SPEEDS } from '../anim.js';
 import { showRules } from './rules.js';
 
-const ME = 0;
-const AI = 1;
+const RUN_AI = 1; // in run matches the AI is always player 1
 const BLOCKER_KEY = {
   needsElement: 'match.needsElement',
   needsEnergy: 'match.needsEnergy',
@@ -48,7 +54,7 @@ function runSession(app) {
       app.setRun(recordEvents(updateMatch(app.run, state), events));
     },
     aiAction(state, step) {
-      return chooseAction(state, AI, { style: opp.style, ...opp.aiParams }, (app.run.seed ^ (step * 2654435761)) >>> 0);
+      return chooseAction(state, RUN_AI, { style: opp.style, ...opp.aiParams }, (app.run.seed ^ (step * 2654435761)) >>> 0);
     },
     finish() {
       const next = finishMatch(app.run);
@@ -67,10 +73,22 @@ export function renderMatch(root, app) {
 export function renderMatchView(root, app, session) {
   const opp = session.opponent;
   const anim = createAnimator(() => app.settings.animSpeed);
+  const ME = session.me ?? 0;
+  const AI = 1 - ME; // the opponent: the AI, or the friend in friend play
   let s = session.state;
   // ui.mode: idle | pickLane | pickTarget | attack | busy
   let ui = { mode: 'idle', selected: null, lane: null, attackers: [], message: '' };
   let aiStep = s.log.length;
+  let mulliganOpen = false;
+  let resultShown = false;
+
+  // Every state change runs through one queue, so actions arriving from the network never
+  // interleave with the player's own actions or with the animations.
+  let chain = Promise.resolve();
+  const enqueue = (fn) => {
+    chain = chain.then(fn).catch((e) => console.error(e));
+    return chain;
+  };
 
   const myTurn = () => s.phase === 'MAIN' && s.activePlayer === ME;
   const selectedInst = () => s.players[ME].hand.find((c) => c.uid === ui.selected) || null;
@@ -79,7 +97,18 @@ export function renderMatchView(root, app, session) {
     ui = { mode: 'idle', selected: null, lane: null, attackers: [], message };
   }
 
-  async function perform(action) {
+  /** Applies one action, saves it and plays its animations. Runs inside the queue. */
+  async function commit(action) {
+    const before = s;
+    const { state, events } = applyAction(s, action);
+    s = state;
+    session.save(s, events, action);
+    session.onAction?.(action, before, s);
+    draw();
+    await anim.play(events, ME);
+  }
+
+  function perform(action) {
     if (ui.mode === 'busy') return;
     if (session.allow && !session.allow(action, s)) {
       reset(session.refusedMessage || '');
@@ -87,16 +116,19 @@ export function renderMatchView(root, app, session) {
       return;
     }
     ui.mode = 'busy';
-    const before = s;
-    const { state, events } = applyAction(s, action);
-    s = state;
-    session.save(s, events);
-    session.onAction?.(action, before, s);
-    draw();
-    await anim.play(events, ME);
-    reset();
-    draw();
-    await afterAction();
+    if (session.propose) {
+      // Friend guest: the host decides; the action comes back through api.receive.
+      ui.message = session.waitingText || '';
+      draw();
+      session.propose(action);
+      return;
+    }
+    enqueue(async () => {
+      await commit(action);
+      reset();
+      draw();
+      await afterAction();
+    });
   }
 
   async function afterAction() {
@@ -106,7 +138,7 @@ export function renderMatchView(root, app, session) {
   }
 
   function needsAi() {
-    if (s.phase === 'GAME_OVER') return false;
+    if (!session.aiAction || s.phase === 'GAME_OVER') return false;
     if (s.phase === 'MULLIGAN') return !s.players[AI].mulliganDone;
     return s.activePlayer === AI;
   }
@@ -116,19 +148,59 @@ export function renderMatchView(root, app, session) {
     draw();
     while (needsAi()) {
       await anim.wait(450);
-      const a = session.aiAction(s, aiStep++);
-      const before = s;
-      const { state, events } = applyAction(s, a);
-      s = state;
-      session.save(s, events);
-      session.onAction?.(a, before, s);
-      draw();
-      await anim.play(events, ME);
+      await commit(session.aiAction(s, aiStep++));
     }
     reset();
     draw();
     await afterAction();
   }
+
+  session.attach?.({
+    /** An action from the network. Resolves false (state untouched) if it is not legal here. */
+    receive(action) {
+      return new Promise((resolve) => {
+        enqueue(async () => {
+          try {
+            await commit(action);
+          } catch (e) {
+            if (!(e instanceof IllegalActionError)) throw e;
+            resolve(false);
+            return;
+          }
+          resolve(true);
+          if (ui.mode === 'busy') reset();
+          draw();
+          await afterAction();
+        });
+      });
+    },
+    /** Replaces the whole state (friend guest after a resync). */
+    rebuild(state) {
+      enqueue(async () => {
+        s = state;
+        reset();
+        draw();
+        await afterAction();
+      });
+    },
+    /** The host rejected the guest's proposal: let the player choose again. */
+    refused() {
+      enqueue(async () => {
+        if (ui.mode === 'busy') reset();
+        draw();
+        await afterAction();
+      });
+    },
+    /** session.aiAction was just added (the friend left): let the AI continue. */
+    resume() {
+      enqueue(async () => {
+        if (ui.mode === 'busy') reset();
+        draw();
+        await afterAction();
+      });
+    },
+    state: () => s,
+  });
 
   // ---- input -------------------------------------------------------------
 
@@ -211,7 +283,10 @@ export function renderMatchView(root, app, session) {
   // ---- overlays ----------------------------------------------------------
 
   function showMulligan() {
+    if (mulliganOpen) return; // the opponent's choice may arrive while the dialog is open
+    mulliganOpen = true;
     const keep = (k) => {
+      mulliganOpen = false;
       closeOverlay();
       perform({ type: 'mulligan', player: ME, keep: k });
     };
@@ -254,8 +329,11 @@ export function renderMatchView(root, app, session) {
   }
 
   function showResult() {
+    if (resultShown) return;
+    resultShown = true;
+    mulliganOpen = false;
     const r = isGameOver(s);
-    const title = r.winner === ME ? t('match.won') : r.winner === null ? t('match.draw') : t('match.lost');
+    const title = r.winner === ME ? t('match.won') : r.winner === null ? session.drawText || t('match.draw') : t('match.lost');
     showOverlay([
       h('h2', { class: r.winner === ME ? 'win' : 'loss' }, title),
       h('p', {}, t(`match.reason.${r.reason}`)),
@@ -313,6 +391,7 @@ export function renderMatchView(root, app, session) {
 
     let prompt = ui.message || idleHint();
     if (!prompt) prompt = s.phase === 'MAIN' ? (myTurn() ? t('match.yourTurn') : t('match.opponentTurn')) : '';
+    if (!prompt && s.phase === 'MULLIGAN' && s.players[ME].mulliganDone) prompt = t('match.waitOpponent');
 
     let buttons;
     if (ui.mode === 'attack') {
@@ -339,8 +418,9 @@ export function renderMatchView(root, app, session) {
       h('section', { class: `screen match mode-${ui.mode}` },
         h('div', { class: 'match-top' },
           h('button', { class: 'icon-btn', 'aria-label': t('match.pause'), onclick: showPause }, '❚❚'),
-          renderPlayerBar(s, AI, { name: opp.name, targetable: enemyPlayerTargetable, onclick: () => enemyPlayerTargetable && onTarget(playerRef(AI)) })),
+          renderPlayerBar(s, AI, { name: opp.name, showHand: true, targetable: enemyPlayerTargetable, onclick: () => enemyPlayerTargetable && onTarget(playerRef(AI)) })),
         renderLanes(s, AI, {
+          top: true,
           laneState: (lane, u) => ({ targetable: u && cands.includes(u.uid) }),
           onUnit: (u) => onUnit(u, AI),
         }),
@@ -363,5 +443,5 @@ export function renderMatchView(root, app, session) {
   }
 
   draw();
-  afterAction();
+  enqueue(afterAction);
 }

@@ -226,7 +226,7 @@ h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin: 14px 0 6px;
 }
 .lane.selectable { border-color: var(--accent); border-style: solid; background: #f2b5441c; cursor: pointer; animation: pulse 1s infinite alternate; }
 .lane.attack-selected .card-board { border-color: var(--ahjo); box-shadow: 0 0 0 2px var(--ahjo), 0 0 14px #e0663a88; }
-.lanes-p1 .lane { border-color: #ffffff12; }
+.lanes-top .lane { border-color: #ffffff12; }
 
 .midline { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; min-height: 22px; padding: 0 4px; }
 .turn { color: var(--muted); }
@@ -239,7 +239,7 @@ h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin: 14px 0 6px;
 .attacking { animation: lunge .35s ease-out; }
 .hit { animation: shake .3s; }
 @keyframes lunge { 50% { transform: translateY(-14px) scale(1.04); } }
-.lanes-p1 .attacking { animation-name: lunge-down; }
+.lanes-top .attacking { animation-name: lunge-down; }
 @keyframes lunge-down { 50% { transform: translateY(14px) scale(1.04); } }
 @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 @keyframes pulse { from { filter: brightness(1); } to { filter: brightness(1.25); } }
@@ -361,3 +361,19 @@ h1.loss { color: var(--danger); font-size: 30px; }
 .segmented button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 .your-deck { width: 100%; display: flex; flex-direction: column; gap: 6px; }
 .your-deck h3 { margin: 4px 0 0; text-transform: none; letter-spacing: 0; }
+
+/* Play with a friend (specs/002-friend-play) */
+.friend .tagline, .friend .dialog-text { max-width: 340px; }
+.join-row { display: flex; gap: 8px; }
+.join-row > button { flex: 0 0 auto; padding: 0 18px; }
+.code-input {
+  flex: 1; min-width: 0; min-height: var(--tap); padding: 0 12px; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--bg-2); color: var(--text);
+  font: inherit; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; text-align: center;
+}
+.code-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.game-code { font-size: 42px; font-weight: 800; letter-spacing: .2em; color: var(--accent); user-select: all; }
+.invite-link { font-size: 13px; color: var(--muted); word-break: break-all; max-width: 340px; user-select: all; }
+.friend .fine { font-size: 13px; color: var(--muted); margin: 0; }
+.friend .waiting { color: var(--muted); animation: fade-pulse 1.6s ease-in-out infinite; margin: 4px 0; }
+@keyframes fade-pulse { 50% { opacity: .45; } }

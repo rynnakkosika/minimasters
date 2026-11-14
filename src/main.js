@@ -16,6 +16,8 @@ import { renderRules } from './ui/screens/rules.js';
 import { renderCollection } from './ui/screens/collection.js';
 import { renderRecords } from './ui/screens/records.js';
 import { renderSettings } from './ui/screens/settings.js';
+import { renderFriend, leaveFriendGame } from './ui/screens/friend.js';
+import { codeFromUrl } from './net/protocol.js';
 
 function randomSeed() {
   const a = new Uint32Array(1);
@@ -35,6 +37,7 @@ const SCREENS = {
   collection: renderCollection,
   records: renderRecords,
   settings: renderSettings,
+  friend: renderFriend,
 };
 const root = document.getElementById('app');
 const store = createStore();
@@ -98,6 +101,7 @@ const app = {
 
   go(screen) {
     closeOverlay();
+    if (app.screen.startsWith('friend')) leaveFriendGame(); // leaving a friend game closes its connection
     app.screen = screen;
     if (history.state?.screen !== screen) history.pushState({ screen }, '');
     window.scrollTo(0, 0);
@@ -129,7 +133,7 @@ const app = {
 
 // Android back button / browser back: never leave a match by accident, otherwise go to the menu.
 window.addEventListener('popstate', () => {
-  if (app.screen === 'match' || app.screen === 'tutorial') {
+  if (app.screen === 'match' || app.screen === 'tutorial' || app.screen === 'friend-match') {
     history.pushState({ screen: app.screen }, '');
     document.querySelector('.match-top .icon-btn')?.click();
   } else if (app.screen !== 'menu') {
@@ -145,8 +149,11 @@ document.addEventListener('visibilitychange', () => {
 document.documentElement.lang = setLocale(profile.settings.locale || navigator.language);
 loadCards();
 app.run = store.loadRun();
-history.replaceState({ screen: 'menu' }, '');
+// An invite link (?peli=CODE) opens "Play with a friend" with the code filled in (specs/002-friend-play).
+app.invite = codeFromUrl(location.href) || null;
+history.replaceState({ screen: 'menu' }, '', app.invite ? location.pathname : undefined);
 app.go('menu');
+if (app.invite) app.go('friend');
 if (store.problem === 'corrupt') toast(t('save.corrupt'));
 
 // Offline support for the web version (the Android app ships the files inside the APK).

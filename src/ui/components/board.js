@@ -8,7 +8,7 @@ import { renderCard } from './card.js';
  */
 export function renderLanes(s, p, opts = {}) {
   const lanes = s.players[p].lanes;
-  return h('div', { class: `lanes lanes-p${p}` },
+  return h('div', { class: `lanes lanes-p${p}${opts.top ? ' lanes-top' : ''}` },
     lanes.map((u, lane) => {
       const st = opts.laneState ? opts.laneState(lane, u) : {};
       const cls = ['lane'];

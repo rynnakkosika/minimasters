@@ -3,7 +3,7 @@ import { h } from '../dom.js';
 import { t } from '../../data/i18n.js';
 import { elementGlyph } from './card.js';
 
-export function renderPlayerBar(s, p, { name, targetable = false, onclick = null } = {}) {
+export function renderPlayerBar(s, p, { name, showHand = false, targetable = false, onclick = null } = {}) {
   const pl = s.players[p];
   const active = s.phase === 'MAIN' && s.activePlayer === p;
   return h('div', { class: `player-bar${active ? ' active' : ''}${targetable ? ' targetable' : ''}`, dataset: { player: p }, onclick },
@@ -13,5 +13,5 @@ export function renderPlayerBar(s, p, { name, targetable = false, onclick = null
     h('span', { class: 'sources' },
       ['ahjo', 'kallio', 'usva'].filter((e) => pl.resources[e] > 0).map((e) =>
         h('span', { class: `el-chip el-${e}` }, `${elementGlyph(e)}${pl.resources[e]}`))),
-    h('span', { class: 'counts' }, p === 1 ? `✋${pl.hand.length} ` : '', `▤${pl.deck.length}`));
+    h('span', { class: 'counts' }, showHand ? `✋${pl.hand.length} ` : '', `▤${pl.deck.length}`));
 }

@@ -32,6 +32,7 @@ export function renderMenu(root, app) {
       h('div', { class: 'menu-buttons' },
         inProgress ? h('button', { class: 'primary', onclick: () => app.resume() }, t('menu.continue')) : null,
         h('button', { class: inProgress ? '' : 'primary', onclick: startNew }, t('menu.newRun')),
+        h('button', { onclick: () => app.go('friend') }, t('menu.friend')),
         h('button', { onclick: () => app.go('tutorial') }, t('menu.tutorial')),
         h('button', { onclick: () => app.go('rules') }, t('menu.rules')),
         h('div', { class: 'menu-row' },
