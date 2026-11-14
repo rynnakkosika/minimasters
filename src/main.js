@@ -151,5 +151,10 @@ history.replaceState({ screen: 'menu' }, '');
 app.go('menu');
 if (store.problem === 'corrupt') toast(t('save.corrupt'));
 
+// Offline support for the web version (the Android app ships the files inside the APK).
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
 // Exposed for debugging in the browser console only.
 window.__app = app;

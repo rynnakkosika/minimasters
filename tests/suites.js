@@ -10,4 +10,5 @@ export const SUITES = [
   'run.test.js',
   'save.test.js',
   'tutorial.test.js',
+  'sw.test.js',
 ];

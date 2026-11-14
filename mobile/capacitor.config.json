@@ -1,0 +1,8 @@
+{
+  "appId": "io.github.rynnakkosika.minimasters",
+  "appName": "Minimasters",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#1d1b24"
+  }
+}

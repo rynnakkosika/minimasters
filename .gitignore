@@ -9,3 +9,7 @@ Thumbs.db
 *.tmp
 .vscode/
 .idea/
+mobile/www/
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/keystore.properties

@@ -191,9 +191,9 @@ Yksi projekti ilman build-vaihetta: peli on repon juuressa (`index.html`, `src/`
 
 ### Offline ja Android
 
-- [ ] T066 [P] Luo `manifest.webmanifest`, `sw.js` (välimuistiin kaikki `index.html`, `src/`, `data/` ja `assets/` -tiedostot, versioitu välimuistinimi) ja `privacy.html` (tietoja ei kerätä eikä lähetetä) (FR-026)
-- [ ] T067 Luo `mobile/` Horse Racerin `mobile/`-kansion mallin mukaan: `package.json` (Capacitor 8.6.0, `@capacitor/app`), `capacitor.config.json` (appId, appName, pystysuunta), `scripts/copy-web.mjs`, `npx cap add android` sekä takaisin-painikkeen ja `pause`-tapahtuman käsittely `src/main.js`:ssä
-- [ ] T068 [P] Ikoni ja splash: `mobile/scripts/render-images.mjs` ja `npm run images` (kuten Horse Racerissa)
+- [X] T066 [P] Luo `manifest.webmanifest`, `sw.js` (välimuistiin kaikki `index.html`, `src/`, `data/` ja `assets/` -tiedostot, versioitu välimuistinimi) ja `privacy.html` (tietoja ei kerätä eikä lähetetä) (FR-026)
+- [X] T067 Luo `mobile/` Horse Racerin `mobile/`-kansion mallin mukaan: `package.json` (Capacitor 8.6.0, `@capacitor/app`), `capacitor.config.json` (appId, appName, pystysuunta), `scripts/copy-web.mjs`, `npx cap add android` sekä takaisin-painikkeen ja `pause`-tapahtuman käsittely `src/main.js`:ssä
+- [X] T068 [P] Ikoni ja splash: `mobile/scripts/render-images.mjs` ja `npm run images` (kuten Horse Racerissa)
 - [ ] T069 Rakenna debug-APK (`cd mobile && npm run apk`) ja testaa puhelimella tai emulaattorilla: 360 px näyttö, lentokonetila (FR-026), kieli fi/en/de (FR-027) ja keskeytys sekä jatkaminen (SC-007)
 - [ ] T070 [P] Kauppamateriaalit kansioon `store/`: kuvaus fi/en, kuvakaappaukset ja ominaisuusgrafiikka, ikäluokituslomakkeen vastaukset (ei rahapelejä, ei oikealla rahalla ostettavia satunnaispalkintoja) ja data safety -vastaukset (ei kerättyä dataa)
 
