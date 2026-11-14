@@ -4,6 +4,12 @@ Alkuperäinen keräilykorttipeli puhelimille. Jokainen **run** alkaa tyhjästä:
 
 Pelin nimi, maailma, kortit, taide ja säännöt ovat alkuperäisiä. Peli ei käytä minkään olemassa olevan korttipelin nimiä, korttien nimiä, kuvitusta eikä sääntötekstejä (spec FR-025). "Minimasters" on vain sisäinen työnimi.
 
+## Pelaa
+
+**Selaimessa:** <https://rynnakkosika.github.io/minimasters/> – toimii puhelimella ja tietokoneella. Puhelimella valitse selaimen valikosta *Lisää aloitusnäyttöön*, niin peli aukeaa kuin sovellus ja toimii myös ilman verkkoa.
+
+Sivu päivittyy automaattisesti, kun `main`-haaraan pushataan.
+
 ## Säännöt lyhyesti
 
 - Kummallakin on 20 elämää. Elämät nollaan pudottanut häviää.
